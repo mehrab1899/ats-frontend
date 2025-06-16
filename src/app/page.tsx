@@ -2,6 +2,7 @@
 
 import React from 'react';
 import JobCard from '../components/JobCard';
+import JobListQuery from '@/components/JobListQuery';
 
 const jobData = [
   {
@@ -20,19 +21,19 @@ const jobData = [
 
 const cultureData = [
   {
-    imgSrc: '/modern.jpg', 
+    imgSrc: '/modern.jpg',
     title: 'Innovation at the Core',
     description:
       'At Capventis, innovation drives everything we do. We foster an environment where creativity and fresh ideas are encouraged.',
   },
   {
-    imgSrc: '/culture.jpg', 
+    imgSrc: '/culture.jpg',
     title: 'Collaborative Work Environment',
     description:
       'We believe in the power of teamwork. Our culture is built on collaboration, where every voice is heard and valued.',
   },
   {
-    imgSrc: '/growth.jpg', 
+    imgSrc: '/growth.jpg',
     title: 'Growth and Development',
     description:
       'We are committed to the growth of our employees, providing ample opportunities for learning, skill development, and career advancement.',
@@ -60,7 +61,6 @@ export default function Home() {
         <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">
           Open Positions
         </h2>
-
         <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {jobData.map((job, index) => (
             <JobCard key={index} title={job.title} description={job.description} />
@@ -68,7 +68,7 @@ export default function Home() {
         </div>
       </section>
 
-       {/* Why Us / Culture Section */}
+      {/* Why Us / Culture Section */}
       <section className="max-w-4xl mx-auto">
         <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">
           Why Work With Us
