@@ -1,14 +1,11 @@
-'use client';
+import StatCardsGrid from '@/components/admin/dashboard/StatCardsGrid';
+import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
 
-import React from 'react';
-
-const DashboardPage: React.FC = () => {
-
+export default function DashboardPage() {
     return (
-        <div className="w-full h-full flex items-center justify-center px-12">
-            In dashboard Page
+        <div className="space-y-10">
+            <StatCardsGrid />
+            <JobTrendChart />
         </div>
     );
-};
-
-export default DashboardPage;
+}
