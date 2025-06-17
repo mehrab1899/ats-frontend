@@ -6,12 +6,11 @@ import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
 import TabSwitcher from '@/components/admin/dashboard/TabSwitcher';
 import SearchField from '@/components/SearchField';
 import DataTable from '@/components/DataTable';
-
 import { jobColumns } from '../jobs/columns';
 import { applicantColumns } from '../applicants/columns';
-
 import { useJobs } from '../jobs/useJobs';
 import { useApplicants } from '../applicants/useApplicants';
+
 const TABS = ['Jobs', 'Applicants'];
 const FILTERS = ['All', 'Active', 'Archived'];
 
@@ -20,9 +19,9 @@ export default function DashboardPage() {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedFilter, setSelectedFilter] = useState<string>(FILTERS[0]);
 
-    const { data: jobData, loading: jobsLoading } = useJobs();
-    const { data: applicantData, loading: applicantsLoading } = useApplicants();
-
+    const { data: jobData } = useJobs();
+    const { data: applicantData } = useApplicants();
+    console.log('applicantData', applicantData)
 
     return (
         <div className="space-y-10">
@@ -37,19 +36,35 @@ export default function DashboardPage() {
             </div>
 
             {/* Section 2: Table + Controls */}
-            <div className="rounded-2xl border bg-white shadow-sm px-6 py-4 space-y-4">
+            <div className="rounded-2xl shadow-md bg-white px-0 py-0">
                 {/* Row 1: Tabs + Search */}
-                <div className="flex justify-between items-center flex-wrap gap-4">
-                    <TabSwitcher options={TABS} selected={selectedTab} onSelect={setSelectedTab} />
-                    <SearchField
-                        value={searchTerm}
-                        onChange={setSearchTerm}
-                        placeholder={`Search ${selectedTab.toLowerCase()}...`}
-                    />
+                <div className="flex justify-between items-end px-6 pt-4 border-b border-gray-200">
+                    <div className="flex gap-6">
+                        {TABS.map((tab) => (
+                            <button
+                                key={tab}
+                                onClick={() => setSelectedTab(tab)}
+                                className={`pb-2 font-medium text-sm transition duration-150 ${selectedTab === tab
+                                    ? 'border-b-2 border-[#012C56] text-[#012C56]'
+                                    : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                            >
+                                {tab}
+                            </button>
+                        ))}
+                    </div>
+                    <div className='mb-2'>
+
+                        <SearchField
+                            value={searchTerm}
+                            onChange={setSearchTerm}
+                            placeholder={`Search ${selectedTab.toLowerCase()}...`}
+                        />
+                    </div>
                 </div>
 
                 {/* Row 2: Filter Pills */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex items-center flex-wrap gap-2 px-6 py-3">
                     {FILTERS.map((filter) => (
                         <button
                             key={filter}
@@ -63,11 +78,13 @@ export default function DashboardPage() {
                         </button>
                     ))}
                 </div>
-                <div className="mt-4">
+
+                {/* Row 3: Table */}
+                <div className="pt-2">
                     <DataTable
                         columns={selectedTab === 'Jobs' ? jobColumns : applicantColumns}
                         data={selectedTab === 'Jobs' ? jobData : applicantData}
-                        className="bg-white"
+                        className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[#012C56]"
                     />
                 </div>
             </div>

@@ -13,7 +13,7 @@ export default function SearchField({ value, onChange, placeholder }: SearchFiel
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
-            className="w-64 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#012C56]"
+            className="w-64 px-5 py-2 rounded-full border border-gray-300 shadow-sm bg-white text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#012C56]"
         />
     );
 }
