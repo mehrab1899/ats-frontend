@@ -9,8 +9,8 @@ const ApplicationForm = () => {
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [cv, setCv] = useState(null);
-  const [coverLetter, setCoverLetter] = useState(null);
+  const [cv, setCv] = useState<File | null>(null);
+  const [coverLetter, setCoverLetter] = useState<File | null>(null);
   const [message, setMessage] = useState('');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, setFile: React.Dispatch<React.SetStateAction<any>>) => {
@@ -54,8 +54,13 @@ const ApplicationForm = () => {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter your email"
       />
-      <FileUploader label="CV Upload" onChange={(e) => handleFileChange(e, setCv)} />
-      <FileUploader label="Cover Letter Upload" onChange={(e) => handleFileChange(e, setCoverLetter)} />
+      <div className="w-3/4 lg:w-1/2">
+        <FileUploader label="CV Upload" onChange={setCv} />
+        <div className='mt-6'>
+
+          <FileUploader label="Cover Letter Upload" onChange={setCoverLetter} />
+        </div>
+      </div>
       <div className="w-full">
         <label className="block text-gray-600">Message</label>
         <textarea
