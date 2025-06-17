@@ -1,77 +1,104 @@
-// src/app/components/ApplicationForm.tsx
+'use client';
 import React, { useState } from 'react';
-import TextInput from './TextInput';
-import FileUploader from './FileUploader';
-import Button from './Button';
+import { submitApplication } from '@/modules/applicants/graphql/SubmitApplicationMutation';
+import FileUploader from '@/components/FileUploader'; // adjust import path
 
 const ApplicationForm = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const [form, setForm] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+    message: ''
+  });
   const [cv, setCv] = useState<File | null>(null);
   const [coverLetter, setCoverLetter] = useState<File | null>(null);
-  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, setFile: React.Dispatch<React.SetStateAction<any>>) => {
-    if (e.target.files) {
-      setFile(e.target.files[0]);
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert('Application Submitted!');
+    setLoading(true);
+    setSuccessMsg('');
+    setErrorMsg('');
+
+    if (!cv || !coverLetter) {
+      setErrorMsg('Please attach both CV and cover letter');
+      setLoading(false);
+      return;
+    }
+
+    console.log('inputs', form)
+
+    submitApplication(
+      {
+        input: { ...form, jobId: '1' }, // Replace with dynamic jobId later
+        cv,
+        coverLetter
+      },
+      () => {
+        setLoading(false);
+        setSuccessMsg('Application submitted successfully!');
+        setForm({ firstName: '', lastName: '', phone: '', email: '', message: '' });
+        setCv(null);
+        setCoverLetter(null);
+      },
+      (err) => {
+        setLoading(false);
+        setErrorMsg(err.message || 'Submission failed');
+      }
+    );
   };
 
   return (
-    <form className="space-y-6 mt-6" onSubmit={handleSubmit}>
-      <TextInput
-        label="First Name"
-        type="text"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        placeholder="Enter your first name"
-      />
-      <TextInput
-        label="Last Name"
-        type="text"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        placeholder="Enter your last name"
-      />
-      <TextInput
-        label="Phone"
-        type="tel"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-        placeholder="Enter your phone number"
-      />
-      <TextInput
-        label="Email"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter your email"
-      />
+    <form className="space-y-6 mt-6 w-full max-w-2xl" onSubmit={handleSubmit}>
+      {['firstName', 'lastName', 'phone', 'email'].map((field) => (
+        <div key={field}>
+          <label className="block text-sm font-medium capitalize">{field}</label>
+          <input
+            type={field === 'email' ? 'email' : field === 'phone' ? 'tel' : 'text'}
+            name={field}
+            value={(form as any)[field]}
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border border-gray-300 rounded"
+            required
+          />
+        </div>
+      ))}
+
+      <div>
+        <label className="block text-sm font-medium">Message</label>
+        <textarea
+          name="message"
+          value={form.message}
+          onChange={handleChange}
+          rows={4}
+          className="mt-1 p-2 w-full border border-gray-300 rounded"
+        />
+      </div>
+
       <div className="w-3/4 lg:w-1/2">
         <FileUploader label="CV Upload" onChange={setCv} />
-        <div className='mt-6'>
-
+        <div className="mt-6">
           <FileUploader label="Cover Letter Upload" onChange={setCoverLetter} />
         </div>
       </div>
-      <div className="w-full">
-        <label className="block text-gray-600">Message</label>
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-md"
-          rows={4}
-          placeholder="Write a brief message"
-        />
-      </div>
-      <Button label="Submit Application" onClick={handleSubmit} className="mt-4" />
+
+      {errorMsg && <p className="text-red-600">{errorMsg}</p>}
+      {successMsg && <p className="text-green-600">{successMsg}</p>}
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      >
+        {loading ? 'Submitting...' : 'Submit Application'}
+      </button>
     </form>
   );
 };

@@ -8,6 +8,7 @@ type Mutation {
   createJob(input: JobInput!): Job!
   updateJob(id: ID!, input: JobInput!): Job!
   updateJobStatus(id: ID!, status: JobStatus!): Job!
+  submitApplicationText(input: ApplicantTextInput!, cv: Upload!, coverLetter: Upload!): Applicant!
 }
 
 """
@@ -42,4 +43,38 @@ input JobInput {
 
 type Query {
   jobs: [Job!]!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+enum Stage {
+  APPLIED
+  SHORTLISTED
+  INTERVIEWED
+  HIRED
+  REJECTED
+}
+
+type Applicant {
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  jobId: String!
+  stage: Stage!
+  cv: String!
+  coverLetter: String!
+  message: String
+  appliedAt: String!
+}
+
+input ApplicantTextInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  jobId: String!
+  message: String
 }
