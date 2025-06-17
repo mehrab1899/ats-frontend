@@ -2,22 +2,7 @@
 
 import React from 'react';
 import JobCard from '../../components/JobCard';
-import JobListQuery from '@/components/JobListQuery';
-
-const jobData = [
-    {
-        title: 'Frontend Developer',
-        description: 'We are looking for a skilled React developer with experience in building scalable web applications.',
-    },
-    {
-        title: 'Backend Engineer',
-        description: 'Join our team to build robust APIs and microservices using Node.js and TypeScript.',
-    },
-    {
-        title: 'UI/UX Designer',
-        description: 'Design intuitive user interfaces and experiences for our applicant tracking platform.',
-    },
-];
+import { useJobs } from '@/modules/jobs/hooks/useJobs';
 
 const cultureData = [
     {
@@ -41,6 +26,8 @@ const cultureData = [
 ];
 
 export default function Home() {
+    const { jobs } = useJobs(); // ✅ Relay hook
+    console.log('jobs', jobs);
     return (
         <div className="bg-gray-100 text-center min-h-screen px-4 py-10 space-y-24">
 
@@ -58,13 +45,16 @@ export default function Home() {
 
             {/* Job Positions Section */}
             <section className="max-w-6xl mx-auto">
-                <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">
-                    Open Positions
-                </h2>
+                <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">Open Positions</h2>
+
                 <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    {jobData.map((job, index) => (
-                        <JobCard key={index} title={job.title} description={job.description} />
-                    ))}
+                    {jobs?.length === 0 ? (
+                        <p className="col-span-full text-gray-500">No open positions available right now.</p>
+                    ) : (
+                        jobs.map((job) => (
+                            <JobCard id={job.id} key={job.id} title={job.title} description={job.description} />
+                        ))
+                    )}
                 </div>
             </section>
 
