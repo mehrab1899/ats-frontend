@@ -2,8 +2,14 @@
 import React, { useState } from 'react';
 import { submitApplication } from '@/modules/applicants/graphql/SubmitApplicationMutation';
 import FileUploader from '@/components/FileUploader'; // adjust import path
+import { useToast } from '@/context/ToastContext';
+import { useRouter } from 'next/navigation';
 
-const ApplicationForm = () => {
+interface ApplicationFormProps {
+  jobId: string;
+}
+
+const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -16,6 +22,10 @@ const ApplicationForm = () => {
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+
+  const { addToast } = useToast();
+  const router = useRouter();
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -37,19 +47,22 @@ const ApplicationForm = () => {
 
     submitApplication(
       {
-        input: { ...form, jobId: '1' }, // Replace with dynamic jobId later
+        input: { ...form, jobId }, // Replace with dynamic jobId later
         cv,
         coverLetter
       },
       () => {
         setLoading(false);
-        setSuccessMsg('Application submitted successfully!');
+        addToast('Application submitted successfully!', 'success');
         setForm({ firstName: '', lastName: '', phone: '', email: '', message: '' });
         setCv(null);
         setCoverLetter(null);
+        router.push('/');
+
       },
       (err) => {
         setLoading(false);
+        addToast(err.message || 'Something went wrong', 'error');
         setErrorMsg(err.message || 'Submission failed');
       }
     );

@@ -71,7 +71,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ label, onChange }) => {
         />
       </div>
     </div>
-  );
+);
 };
 
 export default FileUploader;
