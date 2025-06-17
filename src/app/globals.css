@@ -5,8 +5,10 @@
   --font-sans: 'Poppins', sans-serif;
   --background: #ffffff;
   --foreground: #171717;
-  --primary-color: #0d6efd; /* Blue */
-  --secondary-color: #f8f9fa; /* Light gray for accents */
+  --primary-color: #012C56;
+  /* Blue */
+  --secondary-color: #f8f9fa;
+  /* Light gray for accents */
 }
 
 @theme inline {
@@ -20,7 +22,8 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-    --primary-color: #0d6efd; /* Maintain the same primary color */
+    --primary-color: #012C56;
+    /* Maintain the same primary color */
   }
 }
 
@@ -30,15 +33,19 @@ body {
   font-family: var(--font-sans);
 }
 
-header, footer {
-  background-color: #343a40; /* Dark background for header and footer */
-  color: #ffffff; /* White text */
-}
+/* header,
+footer {
+  background-color: #343a40; */
+/* Dark background for header and footer */
+/* color: #ffffff; */
+/* White text */
+/* } */
 
 button {
-  background-color: var(--primary-color);
+  cursor: pointer;
+  /* background-color: var(--primary-color);
   color: #ffffff;
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 1rem; */
 }
