@@ -33,18 +33,19 @@ body {
   font-family: var(--font-sans);
 }
 
-header,
+/* header,
 footer {
-  background-color: #343a40;
-  /* Dark background for header and footer */
-  color: #ffffff;
-  /* White text */
-}
+  background-color: #343a40; */
+/* Dark background for header and footer */
+/* color: #ffffff; */
+/* White text */
+/* } */
 
 button {
-  background-color: var(--primary-color);
+  cursor: pointer;
+  /* background-color: var(--primary-color);
   color: #ffffff;
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 1rem; */
 }
