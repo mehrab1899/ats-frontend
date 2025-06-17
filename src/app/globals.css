@@ -43,9 +43,9 @@ footer {
 
 button {
   cursor: pointer;
-  /* background-color: var(--primary-color);
+  background-color: var(--primary-color);
   color: #ffffff;
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  font-size: 1rem; */
+  font-size: 1rem;
 }

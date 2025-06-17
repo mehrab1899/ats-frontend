@@ -14,13 +14,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <title>Capventis ATS</title>
             </head>
             <body >
-                {/* <RelayProvider> */}
-                {/* <AuthProvider> */}
                 <Header bannerText={bannerText} />
                 <main className="flex-grow">{children}</main>
                 <Footer />
-                {/* </AuthProvider> */}
-                {/* </RelayProvider> */}
             </body>
         </html>
     );

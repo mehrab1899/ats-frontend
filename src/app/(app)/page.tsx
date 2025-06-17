@@ -32,7 +32,7 @@ export default function Home() {
         <div className="bg-gray-100 text-center min-h-screen px-4 py-10 space-y-24">
 
             {/* About Us Section */}
-            <section className="max-w-4xl mx-auto">
+            <section id="about" className="max-w-4xl mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-6">
                     About Us
                 </h2>
@@ -44,7 +44,7 @@ export default function Home() {
             </section>
 
             {/* Job Positions Section */}
-            <section className="max-w-6xl mx-auto">
+            <section id="positions" className="max-w-6xl mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">Open Positions</h2>
 
                 <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -59,7 +59,7 @@ export default function Home() {
             </section>
 
             {/* Why Us / Culture Section */}
-            <section className="max-w-4xl mx-auto">
+            <section id="culture" className="max-w-4xl mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">
                     Why Work With Us
                 </h2>
