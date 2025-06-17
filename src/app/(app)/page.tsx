@@ -32,7 +32,7 @@ export default function Home() {
         <div className="bg-gray-100 text-center min-h-screen px-4 py-10 space-y-24">
 
             {/* About Us Section */}
-            <section className="max-w-4xl mx-auto">
+            <section id="about" className="max-w-4xl mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-6">
                     About Us
                 </h2>
@@ -44,7 +44,7 @@ export default function Home() {
             </section>
 
             {/* Job Positions Section */}
-            <section className="max-w-6xl mx-auto">
+            <section id="positions" className="max-w-6xl mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">Open Positions</h2>
 
                 <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -59,25 +59,29 @@ export default function Home() {
             </section>
 
             {/* Why Us / Culture Section */}
-            <section className="max-w-4xl mx-auto">
+            <section id="culture" className="max-w-4xl mx-auto px-4">
                 <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">
                     Why Work With Us
                 </h2>
 
-                <div className="space-y-12">
+                <div className="space-y-16">
                     {cultureData.map((item, index) => (
                         <div
                             key={index}
-                            className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                            className={`flex flex-col md:flex-row items-center gap-6 ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''
+                                }`}
                         >
-                            <div className="w-1/2">
+                            {/* Image */}
+                            <div className="w-full md:w-1/2">
                                 <img
                                     src={item.imgSrc}
                                     alt={item.title}
-                                    className="w-92 h-100 object-contain rounded-lg mx-auto"
+                                    className="w-full h-auto object-cover rounded-2xl shadow-md"
                                 />
                             </div>
-                            <div className="w-1/2 px-6 py-4">
+
+                            {/* Text */}
+                            <div className="w-full md:w-1/2 px-4 md:px-6">
                                 <h3 className="text-2xl font-semibold text-blue-800 mb-4">{item.title}</h3>
                                 <p className="text-lg text-gray-700">{item.description}</p>
                             </div>
