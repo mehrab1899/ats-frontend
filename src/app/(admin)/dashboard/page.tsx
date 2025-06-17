@@ -5,7 +5,13 @@ import StatCardsGrid from '@/components/admin/dashboard/StatCardsGrid';
 import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
 import TabSwitcher from '@/components/admin/dashboard/TabSwitcher';
 import SearchField from '@/components/SearchField';
+import DataTable from '@/components/DataTable';
 
+import { jobColumns } from '../jobs/columns';
+import { applicantColumns } from '../applicants/columns';
+
+import { useJobs } from '../jobs/useJobs';
+import { useApplicants } from '../applicants/useApplicants';
 const TABS = ['Jobs', 'Applicants'];
 const FILTERS = ['All', 'Active', 'Archived'];
 
@@ -13,6 +19,10 @@ export default function DashboardPage() {
     const [selectedTab, setSelectedTab] = useState<string>(TABS[0]);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedFilter, setSelectedFilter] = useState<string>(FILTERS[0]);
+
+    const { data: jobData, loading: jobsLoading } = useJobs();
+    const { data: applicantData, loading: applicantsLoading } = useApplicants();
+
 
     return (
         <div className="space-y-10">
@@ -53,11 +63,12 @@ export default function DashboardPage() {
                         </button>
                     ))}
                 </div>
-
-                {/* Row 3: Placeholder Table */}
-                <div className="mt-4 border rounded-lg p-4 bg-gray-50 text-sm text-gray-600 text-center">
-                    Table content for <strong>{selectedTab}</strong> filtered by <strong>{selectedFilter}</strong>{' '}
-                    with search term "<strong>{searchTerm}</strong>" will appear here.
+                <div className="mt-4">
+                    <DataTable
+                        columns={selectedTab === 'Jobs' ? jobColumns : applicantColumns}
+                        data={selectedTab === 'Jobs' ? jobData : applicantData}
+                        className="bg-white"
+                    />
                 </div>
             </div>
         </div>
