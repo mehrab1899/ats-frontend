@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
   bannerText: string;
@@ -11,6 +12,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ bannerText }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <div className="relative w-full h-[70vh]">
@@ -36,7 +38,8 @@ const Header: React.FC<HeaderProps> = ({ bannerText }) => {
         </nav>
 
         {/* Desktop Button */}
-        <button className="hidden md:inline-block bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-200 transition-colors">
+        <button onClick={() => router.push('/login')}
+          className="hidden md:inline-block bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-200 transition-colors">
           Login
         </button>
 
@@ -63,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ bannerText }) => {
             <Link href="/#about" scroll={true} onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition-colors">About Us</Link>
             <Link href="/#positions" scroll={true} onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition-colors">Positions</Link>
             <Link href="/#culture" scroll={true} onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition-colors">Culture</Link>
-            <button className="mt-6 bg-white text-black px-6 py-2 rounded-md font-semibold hover:bg-gray-300 transition-colors">
+            <button onClick={() => router.push('/login')} className="mt-6 bg-white text-black px-6 py-2 rounded-md font-semibold hover:bg-gray-300 transition-colors">
               Login
             </button>
           </nav>

@@ -9,9 +9,6 @@ export default function ApplyPage() {
     const params = useParams();
     const jobId = params?.id; const { jobs } = useJobs();
 
-    console.log('jobId', jobId)
-    console.log('jobs', jobs)
-
     const selectedJob = jobs.find((job) => job.id === jobId);
 
     if (!selectedJob) {
@@ -61,7 +58,7 @@ export default function ApplyPage() {
             <hr className="my-8 border-t border-gray-200" />
 
             <h2 className="text-2xl font-bold text-[#012C56] mb-4">Application Form</h2>
-            <ApplicationForm />
+            <ApplicationForm jobId={jobId} />
         </div>
     );
 }
