@@ -6,6 +6,7 @@
   --background: #ffffff;
   --foreground: #171717;
   --primary-color: #012C56;
+  --primary-color-light: #2e4257;
   /* Blue */
   --secondary-color: #f8f9fa;
   /* Light gray for accents */
@@ -43,9 +44,16 @@ footer {
 
 button {
   cursor: pointer;
+  font-size: 1rem;
+}
+
+button.custom-btn {
   background-color: var(--primary-color);
   color: #ffffff;
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  font-size: 1rem;
+}
+
+button.custom-btn:hover {
+  background-color: var(--primary-color-light);
 }
