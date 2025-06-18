@@ -39,13 +39,13 @@ const Header: React.FC<HeaderProps> = ({ bannerText }) => {
 
         {/* Desktop Button */}
         <button onClick={() => router.push('/login')}
-          className="hidden md:inline-block bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-200 transition-colors">
+          className="custom-btn hidden md:inline-block bg-white text-black px-4 py-2 rounded-md font-medium hover:bg-gray-200 transition-colors">
           Login
         </button>
 
         {/* Mobile Hamburger */}
         <button
-          className="md:hidden text-white text-xl"
+          className="custom-btn md:hidden text-white text-xl"
           onClick={() => setMenuOpen(true)}
         >
           <FaBars />
@@ -57,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ bannerText }) => {
         <div className="fixed inset-0 bg-[#0a1f3d] z-40 text-white flex flex-col">
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700">
             <h1 className="text-2xl font-bold">Capventis</h1>
-            <button onClick={() => setMenuOpen(false)} className="text-2xl">
+            <button onClick={() => setMenuOpen(false)} className="custom-btn text-2xl">
               <FaTimes />
             </button>
           </div>
@@ -66,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ bannerText }) => {
             <Link href="/#about" scroll={true} onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition-colors">About Us</Link>
             <Link href="/#positions" scroll={true} onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition-colors">Positions</Link>
             <Link href="/#culture" scroll={true} onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition-colors">Culture</Link>
-            <button onClick={() => router.push('/login')} className="mt-6 bg-white text-black px-6 py-2 rounded-md font-semibold hover:bg-gray-300 transition-colors">
+            <button onClick={() => router.push('/login')} className="custom-btn mt-6 bg-white text-black px-6 py-2 rounded-md font-semibold hover:bg-gray-300 transition-colors">
               Login
             </button>
           </nav>
