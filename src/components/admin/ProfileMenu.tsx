@@ -2,9 +2,18 @@
 
 import { useState } from 'react';
 import { LogOut, User, UserCircle } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function ProfileMenu() {
     const [open, setOpen] = useState(false);
+    const { logout } = useAuth(); // ✅ Access logout function
+    const router = useRouter();   // ✅ For redirection
+
+    const handleLogout = () => {
+        logout();            // 1. Clear token + auth state
+        router.replace('/login'); // 2. Redirect to login
+    };
 
     return (
         <div className="relative">
@@ -22,7 +31,10 @@ export default function ProfileMenu() {
                         <User className="w-4 h-4" />
                         View Profile
                     </button>
-                    <button className="w-full px-4 py-2 text-left hover:bg-[#E6EDF4] hover:text-[#012C56] flex items-center gap-2 transition-colors">
+                    <button
+                        onClick={handleLogout}
+                        className="w-full px-4 py-2 text-left hover:bg-[#E6EDF4] hover:text-[#012C56] flex items-center gap-2 transition-colors"
+                    >
                         <LogOut className="w-4 h-4" />
                         Logout
                     </button>
