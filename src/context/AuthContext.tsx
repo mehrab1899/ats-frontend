@@ -1,5 +1,3 @@
-
-// src/context/AuthContext.tsx
 'use client';
 
 import React, {
@@ -14,6 +12,7 @@ import Cookies from 'js-cookie';
 
 interface AuthContextType {
     isAuthenticated: boolean;
+    loading: boolean;
     login: (token: string) => void;
     logout: () => void;
 }
@@ -22,14 +21,16 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true); // ✅ new
 
     useEffect(() => {
         const token = Cookies.get('token');
         setIsAuthenticated(!!token);
+        setLoading(false); // ✅ mark that auth check is complete
     }, []);
 
     const login = (token: string) => {
-        Cookies.set('token', token, { expires: 7 }); // store for 7 days
+        Cookies.set('token', token, { expires: 7 });
         setIsAuthenticated(true);
     };
 
@@ -40,18 +41,19 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
     const value: AuthContextType = {
         isAuthenticated,
+        loading, // ✅ expose loading
         login,
         logout,
     };
 
     return (
-        <AuthContext.Provider value={value} >
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-// 4. Export a hook for ease of use
+// Custom hook
 export const useAuth = (): AuthContextType => {
     const context = useContext(AuthContext);
     if (!context) {
