@@ -2,7 +2,7 @@
 
 import React from 'react';
 import JobCard from '../../components/JobCard';
-import { usePublicJobs } from '@/modules/jobs/hooks/useJobs';
+import { usePublicJobs } from '@/modules/jobs/hooks/usePublicJobs';
 
 const cultureData = [
     {

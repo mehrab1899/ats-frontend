@@ -10,6 +10,7 @@ import { jobColumns } from '../jobs/columns';
 import { applicantColumns } from '../applicants/columns';
 import { useJobs } from '../jobs/useJobs';
 import { useApplicants } from '../applicants/useApplicants';
+import { useAdminJobs } from '@/modules/jobs/hooks/useAdminJobs';
 
 const TABS = ['Jobs', 'Applicants'];
 const FILTERS = ['All', 'Active', 'Archived'];
@@ -22,6 +23,9 @@ export default function DashboardPage() {
     const { data: jobData } = useJobs();
     const { data: applicantData } = useApplicants();
     console.log('applicantData', applicantData)
+
+    const { adminJobs } = useAdminJobs('', 'OPEN', 0, 10); // Example usage with search and pagination
+    console.log('adminJobs', adminJobs);
 
     return (
         <div className="space-y-10">
@@ -83,7 +87,7 @@ export default function DashboardPage() {
                 <div className="pt-2">
                     <DataTable
                         columns={selectedTab === 'Jobs' ? jobColumns : applicantColumns}
-                        data={selectedTab === 'Jobs' ? jobData : applicantData}
+                        data={selectedTab === 'Jobs' ? adminJobs : applicantData}
                         className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[#012C56]"
                     />
                 </div>

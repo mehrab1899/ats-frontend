@@ -3,7 +3,7 @@
 import React from "react";
 import { useParams } from "next/navigation";
 import ApplicationForm from "@/components/ApplicationForm";
-import { usePublicJobs } from "@/modules/jobs/hooks/useJobs";
+import { usePublicJobs } from "@/modules/jobs/hooks/usePublicJobs";
 
 export default function ApplyPage() {
     const params = useParams();

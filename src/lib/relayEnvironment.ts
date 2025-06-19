@@ -7,6 +7,7 @@ import {
   RequestParameters,
   Variables,
 } from 'relay-runtime';
+import Cookies from 'js-cookie'
 
 function isFile(value: any): value is File {
   return typeof File !== 'undefined' && value instanceof File;
@@ -60,10 +61,15 @@ async function fetchQuery(params: RequestParameters, variables: Variables) {
     : JSON.stringify({ query: params.text, variables });
 
   const headers: HeadersInit = isMultipart
-    ? {} // Let browser set boundary
+    ? {}
     : {
       'Content-Type': 'application/json',
     };
+
+  const token = Cookies.get('token'); // Get the token from cookies
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
 
   const response = await fetch('http://localhost:4000/graphql', {
     method: 'POST',
