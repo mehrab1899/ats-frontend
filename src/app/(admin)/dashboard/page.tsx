@@ -3,13 +3,11 @@
 import React, { useState } from 'react';
 import StatCardsGrid from '@/components/admin/dashboard/StatCardsGrid';
 import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
-import TabSwitcher from '@/components/admin/dashboard/TabSwitcher';
 import SearchField from '@/components/SearchField';
 import DataTable from '@/components/DataTable';
 import { jobColumns } from '../jobs/columns';
 import { applicantColumns } from '../applicants/columns';
-import { useJobs } from '../jobs/useJobs';
-import { useApplicants } from '../applicants/useApplicants';
+import { useApplicants } from '@/modules/applicants/hooks/useApplicants';
 import { useAdminJobs } from '@/modules/jobs/hooks/useAdminJobs';
 
 const TABS = ['Jobs', 'Applicants'];
@@ -20,9 +18,8 @@ export default function DashboardPage() {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedFilter, setSelectedFilter] = useState<string>(FILTERS[0]);
 
-    const { data: jobData } = useJobs();
-    const { data: applicantData } = useApplicants();
-    console.log('applicantData', applicantData)
+    const { applicants } = useApplicants('', 'APPLIED', 0, 10);
+    console.log('applicantData', applicants)
 
     const { adminJobs } = useAdminJobs('', 'OPEN', 0, 10); // Example usage with search and pagination
     console.log('adminJobs', adminJobs);
@@ -87,7 +84,7 @@ export default function DashboardPage() {
                 <div className="pt-2">
                     <DataTable
                         columns={selectedTab === 'Jobs' ? jobColumns : applicantColumns}
-                        data={selectedTab === 'Jobs' ? adminJobs : applicantData}
+                        data={selectedTab === 'Jobs' ? adminJobs : applicants}
                         className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[#012C56]"
                     />
                 </div>
