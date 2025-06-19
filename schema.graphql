@@ -5,9 +5,9 @@ type AuthPayload {
 type Mutation {
   signup(email: String!, password: String!, firstName: String, lastName: String): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
-  createJob(input: JobInput!): Job!
-  updateJob(id: ID!, input: JobInput!): Job!
-  updateJobStatus(id: ID!, status: JobStatus!): Job!
+  createJob(input: JobInput!): AdminJob!
+  updateJob(id: ID!, input: JobInput!): AdminJob!
+  updateJobStatus(id: ID!, status: JobStatus!): AdminJob!
   submitApplicationText(input: ApplicantTextInput!, cv: Upload!, coverLetter: Upload!): Applicant!
 }
 
@@ -22,7 +22,13 @@ enum JobStatus {
   DRAFT
 }
 
-type Job {
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+}
+
+type PublicJob {
   id: String!
   title: String!
   description: String!
@@ -30,19 +36,31 @@ type Job {
   skillsRequired: JSON!
   benefits: JSON!
   createdAt: String!
-  applicantCount: Int!
+}
+
+type AdminJob {
+  id: String!
+  title: String!
+  description: String!
+  status: JobStatus!
+  type: JobType!
+  applicants: Int!
+  createdAt: String!
 }
 
 input JobInput {
   title: String!
   description: String!
   status: JobStatus
+  type: JobType
   skillsRequired: JSON!
   benefits: JSON!
 }
 
 type Query {
-  jobs: [Job!]!
+  publicJobs: [PublicJob!]!
+  jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): [AdminJob!]!
+  applicants(search: String, stage: Stage, skip: Int, take: Int): [ApplicantRow!]!
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -54,6 +72,15 @@ enum Stage {
   INTERVIEWED
   HIRED
   REJECTED
+}
+
+type ApplicantRow {
+  id: String!
+  name: String!
+  email: String!
+  stage: Stage!
+  position: String!
+  appliedAt: String!
 }
 
 type Applicant {

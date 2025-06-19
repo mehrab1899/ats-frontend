@@ -2,7 +2,7 @@
 
 import React from 'react';
 import JobCard from '../../components/JobCard';
-import { useJobs } from '@/modules/jobs/hooks/useJobs';
+import { usePublicJobs } from '@/modules/jobs/hooks/useJobs';
 
 const cultureData = [
     {
@@ -26,8 +26,8 @@ const cultureData = [
 ];
 
 export default function Home() {
-    const { jobs } = useJobs(); // ✅ Relay hook
-    console.log('jobs', jobs);
+    const { publicJobs } = usePublicJobs(); // ✅ Relay hook
+    console.log('jobs', publicJobs);
     return (
         <div className="bg-gray-100 text-center min-h-screen px-4 py-10 space-y-24">
 
@@ -48,10 +48,10 @@ export default function Home() {
                 <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">Open Positions</h2>
 
                 <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    {jobs?.length === 0 ? (
+                    {publicJobs?.length === 0 ? (
                         <p className="col-span-full text-gray-500">No open positions available right now.</p>
                     ) : (
-                        jobs.map((job) => (
+                        publicJobs.map((job) => (
                             <JobCard id={job.id} key={job.id} title={job.title} description={job.description} />
                         ))
                     )}

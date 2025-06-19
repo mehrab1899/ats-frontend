@@ -1,14 +1,14 @@
-// src/modules/jobs/hooks/useJobs.ts
 import { useLazyLoadQuery } from 'react-relay';
-import { jobQueries_JobsQuery } from '@/__generated__/jobQueries_JobsQuery.graphql';
-import { JobsQuery } from '../graphql/jobQueries';
+import { jobQueries_PublicJobsQuery } from '@/__generated__/jobQueries_PublicJobsQuery.graphql';
+import { PublicJobsQuery } from '../graphql/jobQueries';
 
-export const useJobs = () => {
-    const data = useLazyLoadQuery<jobQueries_JobsQuery>(JobsQuery, {}, {
-        fetchPolicy: 'store-or-network',
+export const usePublicJobs = () => {
+    // Using the `PublicJobsQuery` for public jobs listing
+    const data = useLazyLoadQuery<jobQueries_PublicJobsQuery>(PublicJobsQuery, {}, {
+        fetchPolicy: 'store-or-network', // Fetch from store if available, or network otherwise
     });
 
     return {
-        jobs: data.jobs,
+        publicJobs: data.publicJobs,
     };
 };
