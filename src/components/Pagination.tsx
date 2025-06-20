@@ -9,39 +9,70 @@ interface PaginationProps {
     onPageChange: (page: number) => void;
 }
 
+const getPaginationRange = (current: number, total: number): (number | '...')[] => {
+    const delta = 1;
+    const range: (number | '...')[] = [];
+    const left = Math.max(2, current - delta);
+    const right = Math.min(total - 1, current + delta);
+
+    range.push(1);
+
+    if (left > 2) range.push('...');
+
+    for (let i = left; i <= right; i++) {
+        range.push(i);
+    }
+
+    if (right < total - 1) range.push('...');
+
+    if (total > 1) range.push(total);
+
+    return range;
+};
+
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
+    const pages = getPaginationRange(currentPage, totalPages);
+
+    console.log('totalPages', totalPages)
+
     return (
-        <div className="flex items-center justify-center gap-2 py-4">
-            {/* Previous Page Button */}
+        <div className="flex items-center justify-center gap-2 py-4 text-sm font-medium">
+            {/* Prev Button */}
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-800 hover:bg-gray-200 disabled:bg-gray-200 disabled:text-gray-400"
+                className="flex items-center gap-1 px-3 py-1 rounded-md bg-gray-100 text-gray-800 hover:bg-gray-200 disabled:bg-gray-200 disabled:text-gray-400"
             >
-                <FaChevronLeft />
+                <FaChevronLeft size={12} />
             </button>
 
-            {/* Page Numbers */}
-            {Array.from({ length: totalPages }, (_, index) => (
-                <button
-                    key={index}
-                    onClick={() => onPageChange(index + 1)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition duration-150 ${currentPage === index + 1
-                        ? 'bg-[#012C56] text-white'
-                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                        }`}
-                >
-                    {index + 1}
-                </button>
-            ))}
+            {/* Numbered Pages */}
+            {pages.map((page, idx) =>
+                page === '...' ? (
+                    <span key={`ellipsis-${idx}`} className="px-2 py-1 text-gray-500">
+                        ...
+                    </span>
+                ) : (
+                    <button
+                        key={page}
+                        onClick={() => onPageChange(page)}
+                        className={`px-3 py-1 rounded-md transition border-b-2 ${currentPage === page
+                            ? 'text-[#012C56] border-[#012C56] font-semibold'
+                            : 'text-gray-700 border-transparent hover:bg-gray-100'
+                            }`}
+                    >
+                        {page}
+                    </button>
+                )
+            )}
 
-            {/* Next Page Button */}
+            {/* Next Button */}
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 text-gray-800 hover:bg-gray-200 disabled:bg-gray-200 disabled:text-gray-400"
+                className="flex items-center gap-1 px-3 py-1 rounded-md bg-gray-100 text-gray-800 hover:bg-gray-200 disabled:bg-gray-200 disabled:text-gray-400"
             >
-                <FaChevronRight />
+                <FaChevronRight size={12} />
             </button>
         </div>
     );

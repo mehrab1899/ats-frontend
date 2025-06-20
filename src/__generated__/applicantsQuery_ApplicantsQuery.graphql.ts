@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b79b755e50b4e0e929a05879f34f1a7>>
+ * @generated SignedSource<<c70ff12ae6c18909e2c32737c681592d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,14 +17,17 @@ export type applicantsQuery_ApplicantsQuery$variables = {
   take?: number | null | undefined;
 };
 export type applicantsQuery_ApplicantsQuery$data = {
-  readonly applicants: ReadonlyArray<{
-    readonly appliedAt: string;
-    readonly email: string;
-    readonly id: string;
-    readonly name: string;
-    readonly position: string;
-    readonly stage: Stage;
-  }>;
+  readonly applicants: {
+    readonly applicants: ReadonlyArray<{
+      readonly appliedAt: string;
+      readonly email: string;
+      readonly id: string;
+      readonly name: string;
+      readonly position: string;
+      readonly stage: Stage;
+    }>;
+    readonly totalApplicantsCount: number;
+  };
 };
 export type applicantsQuery_ApplicantsQuery = {
   response: applicantsQuery_ApplicantsQuery$data;
@@ -77,51 +80,69 @@ v4 = [
         "variableName": "take"
       }
     ],
-    "concreteType": "ApplicantRow",
+    "concreteType": "ApplicantsResponse",
     "kind": "LinkedField",
     "name": "applicants",
-    "plural": true,
+    "plural": false,
     "selections": [
       {
         "alias": null,
         "args": null,
-        "kind": "ScalarField",
-        "name": "id",
+        "concreteType": "ApplicantRow",
+        "kind": "LinkedField",
+        "name": "applicants",
+        "plural": true,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "email",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "stage",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "position",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "appliedAt",
+            "storageKey": null
+          }
+        ],
         "storageKey": null
       },
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "name",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "email",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "stage",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "position",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "appliedAt",
+        "name": "totalApplicantsCount",
         "storageKey": null
       }
     ],
@@ -156,16 +177,16 @@ return {
     "selections": (v4/*: any*/)
   },
   "params": {
-    "cacheID": "b6b5da625cca7b546d410c3649aa6591",
+    "cacheID": "501cb4d7a84a008f419a001b88e726df",
     "id": null,
     "metadata": {},
     "name": "applicantsQuery_ApplicantsQuery",
     "operationKind": "query",
-    "text": "query applicantsQuery_ApplicantsQuery(\n  $search: String\n  $stage: Stage\n  $skip: Int\n  $take: Int\n) {\n  applicants(search: $search, stage: $stage, skip: $skip, take: $take) {\n    id\n    name\n    email\n    stage\n    position\n    appliedAt\n  }\n}\n"
+    "text": "query applicantsQuery_ApplicantsQuery(\n  $search: String\n  $stage: Stage\n  $skip: Int\n  $take: Int\n) {\n  applicants(search: $search, stage: $stage, skip: $skip, take: $take) {\n    applicants {\n      id\n      name\n      email\n      stage\n      position\n      appliedAt\n    }\n    totalApplicantsCount\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e30ac4697acdf347ba72648163f28c4b";
+(node as any).hash = "67f3f2cbe958e02337e7a9d96622347a";
 
 export default node;

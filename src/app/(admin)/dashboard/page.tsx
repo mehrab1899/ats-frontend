@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import StatCardsGrid from '@/components/admin/dashboard/StatCardsGrid';
 import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
 import SearchField from '@/components/SearchField';
@@ -25,11 +25,17 @@ export default function DashboardPage() {
     const memoizedSearchTerm = useMemo(() => searchTerm, [searchTerm]);
 
     // Fetch data with pagination
-    const { applicants, totalApplicants } = useApplicants(memoizedSearchTerm, 'APPLIED', (currentPage - 1) * pageSize, pageSize);
-    const { adminJobs, totalJobs } = useAdminJobs(memoizedSearchTerm, 'OPEN', (currentPage - 1) * pageSize, pageSize);
+    const { applicants } = useApplicants(memoizedSearchTerm, 'APPLIED', (currentPage - 1) * pageSize, pageSize);
+    const { adminJobs } = useAdminJobs(memoizedSearchTerm, 'OPEN', (currentPage - 1) * pageSize, pageSize);
 
-    const totalPagesApplicants = Math.ceil(totalApplicants / pageSize);
-    const totalPagesJobs = Math.ceil(totalJobs / pageSize);
+    console.log('applicants', applicants);
+    const totalPagesApplicants = Math.ceil(applicants.totalApplicantsCount / pageSize);
+    const totalPagesJobs = Math.ceil(adminJobs?.length / pageSize);
+
+    // Reset the page when the selectedTab changes
+    useEffect(() => {
+        setCurrentPage(1); // Reset to page 1 when switching tabs
+    }, [selectedTab]);
 
     return (
         <div className="space-y-10">
@@ -90,7 +96,7 @@ export default function DashboardPage() {
                 <div className="pt-2">
                     <DataTable
                         columns={selectedTab === 'Jobs' ? jobColumns : applicantColumns}
-                        data={selectedTab === 'Jobs' ? adminJobs : applicants}
+                        data={selectedTab === 'Jobs' ? adminJobs : applicants.applicants}
                         className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[#012C56]"
                     />
                 </div>
