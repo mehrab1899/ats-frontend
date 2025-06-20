@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33ae38d17a1ea25d3b379e8c352a3678>>
+ * @generated SignedSource<<255603a7b31280421d475e3ce2669b96>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,15 +18,18 @@ export type jobQueries_AdminJobsQuery$variables = {
   take?: number | null | undefined;
 };
 export type jobQueries_AdminJobsQuery$data = {
-  readonly jobs: ReadonlyArray<{
-    readonly applicants: number;
-    readonly createdAt: string;
-    readonly description: string;
-    readonly id: string;
-    readonly status: JobStatus;
-    readonly title: string;
-    readonly type: JobType;
-  }>;
+  readonly jobs: {
+    readonly jobs: ReadonlyArray<{
+      readonly applicants: number;
+      readonly createdAt: string;
+      readonly description: string;
+      readonly id: string;
+      readonly status: JobStatus;
+      readonly title: string;
+      readonly type: JobType;
+    }>;
+    readonly totalJobsCount: number;
+  };
 };
 export type jobQueries_AdminJobsQuery = {
   response: jobQueries_AdminJobsQuery$data;
@@ -79,58 +82,76 @@ v4 = [
         "variableName": "take"
       }
     ],
-    "concreteType": "AdminJob",
+    "concreteType": "JobsResponse",
     "kind": "LinkedField",
     "name": "jobs",
-    "plural": true,
+    "plural": false,
     "selections": [
       {
         "alias": null,
         "args": null,
-        "kind": "ScalarField",
-        "name": "id",
+        "concreteType": "AdminJob",
+        "kind": "LinkedField",
+        "name": "jobs",
+        "plural": true,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "title",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "description",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "status",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "type",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "applicants",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "createdAt",
+            "storageKey": null
+          }
+        ],
         "storageKey": null
       },
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "title",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "description",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "status",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "type",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "applicants",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "createdAt",
+        "name": "totalJobsCount",
         "storageKey": null
       }
     ],
@@ -165,16 +186,16 @@ return {
     "selections": (v4/*: any*/)
   },
   "params": {
-    "cacheID": "616079ec17f48cebf144de4129022fd8",
+    "cacheID": "6539645e1899dbb9be4c7498b5fd9612",
     "id": null,
     "metadata": {},
     "name": "jobQueries_AdminJobsQuery",
     "operationKind": "query",
-    "text": "query jobQueries_AdminJobsQuery(\n  $search: String\n  $status: JobStatus\n  $skip: Int\n  $take: Int\n) {\n  jobs(search: $search, status: $status, skip: $skip, take: $take) {\n    id\n    title\n    description\n    status\n    type\n    applicants\n    createdAt\n  }\n}\n"
+    "text": "query jobQueries_AdminJobsQuery(\n  $search: String\n  $status: JobStatus\n  $skip: Int\n  $take: Int\n) {\n  jobs(search: $search, status: $status, skip: $skip, take: $take) {\n    jobs {\n      id\n      title\n      description\n      status\n      type\n      applicants\n      createdAt\n    }\n    totalJobsCount\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1df0cb98d6b60b087ba6b9e32f5ad05a";
+(node as any).hash = "54e2a49ce938e7c252b7f2f60d4298d9";
 
 export default node;

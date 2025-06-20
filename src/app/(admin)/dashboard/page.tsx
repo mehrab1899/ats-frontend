@@ -29,8 +29,9 @@ export default function DashboardPage() {
     const { adminJobs } = useAdminJobs(memoizedSearchTerm, 'OPEN', (currentPage - 1) * pageSize, pageSize);
 
     console.log('applicants', applicants);
+    console.log('adminJobs', adminJobs)
     const totalPagesApplicants = Math.ceil(applicants.totalApplicantsCount / pageSize);
-    const totalPagesJobs = Math.ceil(adminJobs?.length / pageSize);
+    const totalPagesJobs = Math.ceil(adminJobs?.totalJobsCount / pageSize);
 
     // Reset the page when the selectedTab changes
     useEffect(() => {
@@ -96,7 +97,7 @@ export default function DashboardPage() {
                 <div className="pt-2">
                     <DataTable
                         columns={selectedTab === 'Jobs' ? jobColumns : applicantColumns}
-                        data={selectedTab === 'Jobs' ? adminJobs : applicants.applicants}
+                        data={selectedTab === 'Jobs' ? adminJobs.jobs : applicants.applicants}
                         className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[#012C56]"
                     />
                 </div>
