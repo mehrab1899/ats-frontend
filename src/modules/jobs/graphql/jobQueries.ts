@@ -17,13 +17,16 @@ export const PublicJobsQuery = graphql`
 export const AdminJobsQuery = graphql`
   query jobQueries_AdminJobsQuery($search: String, $status: JobStatus, $skip: Int, $take: Int) {
     jobs(search: $search, status: $status, skip: $skip, take: $take) {
-      id
-      title
-      description
-      status
-      type
-      applicants
-      createdAt
+      jobs {
+        id
+        title
+        description
+        status
+        type
+        applicants
+        createdAt
+      }
+      totalJobsCount
     }
   }
 `;

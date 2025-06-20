@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import StatCardsGrid from '@/components/admin/dashboard/StatCardsGrid';
 import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
 import SearchField from '@/components/SearchField';
 import DataTable from '@/components/DataTable';
+import Pagination from '@/components/Pagination'; // Import Pagination component
 import { jobColumns } from '../jobs/columns';
 import { applicantColumns } from '../applicants/columns';
 import { useApplicants } from '@/modules/applicants/hooks/useApplicants';
@@ -18,13 +19,24 @@ export default function DashboardPage() {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedFilter, setSelectedFilter] = useState<string>(FILTERS[0]);
 
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [pageSize] = useState<number>(1); // You can adjust this for pagination
+
     const memoizedSearchTerm = useMemo(() => searchTerm, [searchTerm]);
 
-    const { applicants } = useApplicants(memoizedSearchTerm, 'APPLIED', 0, 10);
-    console.log('applicantData', applicants)
+    // Fetch data with pagination
+    const { applicants } = useApplicants(memoizedSearchTerm, 'APPLIED', (currentPage - 1) * pageSize, pageSize);
+    const { adminJobs } = useAdminJobs(memoizedSearchTerm, 'OPEN', (currentPage - 1) * pageSize, pageSize);
 
-    const { adminJobs } = useAdminJobs(memoizedSearchTerm, 'OPEN', 0, 10); // Example usage with search and pagination
-    console.log('adminJobs', adminJobs);
+    console.log('applicants', applicants);
+    console.log('adminJobs', adminJobs)
+    const totalPagesApplicants = Math.ceil(applicants.totalApplicantsCount / pageSize);
+    const totalPagesJobs = Math.ceil(adminJobs?.totalJobsCount / pageSize);
+
+    // Reset the page when the selectedTab changes
+    useEffect(() => {
+        setCurrentPage(1); // Reset to page 1 when switching tabs
+    }, [selectedTab]);
 
     return (
         <div className="space-y-10">
@@ -57,7 +69,6 @@ export default function DashboardPage() {
                         ))}
                     </div>
                     <div className='mb-2'>
-
                         <SearchField
                             value={searchTerm}
                             onChange={setSearchTerm}
@@ -86,10 +97,17 @@ export default function DashboardPage() {
                 <div className="pt-2">
                     <DataTable
                         columns={selectedTab === 'Jobs' ? jobColumns : applicantColumns}
-                        data={selectedTab === 'Jobs' ? adminJobs : applicants}
+                        data={selectedTab === 'Jobs' ? adminJobs.jobs : applicants.applicants}
                         className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[#012C56]"
                     />
                 </div>
+
+                {/* Pagination Row */}
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={selectedTab === 'Jobs' ? totalPagesJobs : totalPagesApplicants}
+                    onPageChange={(page) => setCurrentPage(page)}
+                />
             </div>
         </div>
     );
