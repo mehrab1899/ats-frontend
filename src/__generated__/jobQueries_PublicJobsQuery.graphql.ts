@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebd296d93311bed03139c1e6c2f11edc>>
+ * @generated SignedSource<<aa4bcde562c5f2f60208f3c2fde45cd7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,9 @@
 
 import { ConcreteRequest } from 'relay-runtime';
 export type JobStatus = "CLOSED" | "DRAFT" | "OPEN" | "%future added value";
-export type jobQueries_JobsQuery$variables = Record<PropertyKey, never>;
-export type jobQueries_JobsQuery$data = {
-  readonly jobs: ReadonlyArray<{
-    readonly applicantCount: number;
+export type jobQueries_PublicJobsQuery$variables = Record<PropertyKey, never>;
+export type jobQueries_PublicJobsQuery$data = {
+  readonly publicJobs: ReadonlyArray<{
     readonly benefits: any;
     readonly createdAt: string;
     readonly description: string;
@@ -23,9 +22,9 @@ export type jobQueries_JobsQuery$data = {
     readonly title: string;
   }>;
 };
-export type jobQueries_JobsQuery = {
-  response: jobQueries_JobsQuery$data;
-  variables: jobQueries_JobsQuery$variables;
+export type jobQueries_PublicJobsQuery = {
+  response: jobQueries_PublicJobsQuery$data;
+  variables: jobQueries_PublicJobsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -33,9 +32,9 @@ var v0 = [
   {
     "alias": null,
     "args": null,
-    "concreteType": "Job",
+    "concreteType": "PublicJob",
     "kind": "LinkedField",
-    "name": "jobs",
+    "name": "publicJobs",
     "plural": true,
     "selections": [
       {
@@ -86,13 +85,6 @@ var v0 = [
         "kind": "ScalarField",
         "name": "createdAt",
         "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "applicantCount",
-        "storageKey": null
       }
     ],
     "storageKey": null
@@ -103,7 +95,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "jobQueries_JobsQuery",
+    "name": "jobQueries_PublicJobsQuery",
     "selections": (v0/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -112,20 +104,20 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "jobQueries_JobsQuery",
+    "name": "jobQueries_PublicJobsQuery",
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "510ee54c72637fa596946b555322d523",
+    "cacheID": "edced4ec5fa220af812cd8824ae96bcd",
     "id": null,
     "metadata": {},
-    "name": "jobQueries_JobsQuery",
+    "name": "jobQueries_PublicJobsQuery",
     "operationKind": "query",
-    "text": "query jobQueries_JobsQuery {\n  jobs {\n    id\n    title\n    description\n    status\n    skillsRequired\n    benefits\n    createdAt\n    applicantCount\n  }\n}\n"
+    "text": "query jobQueries_PublicJobsQuery {\n  publicJobs {\n    id\n    title\n    description\n    status\n    skillsRequired\n    benefits\n    createdAt\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8ba132ce925ff2de5c3c6424cee502b7";
+(node as any).hash = "93c319c0d60a84da89260f95f3fdc72c";
 
 export default node;

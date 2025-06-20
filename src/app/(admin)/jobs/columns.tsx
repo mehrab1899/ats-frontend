@@ -10,6 +10,8 @@ export type Job = {
     createdAt: string;
 };
 
+
+
 export const jobColumns: Column<Job>[] = [
     { key: 'title', label: 'Title' },
     { key: 'description', label: 'Description' },

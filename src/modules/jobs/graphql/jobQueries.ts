@@ -1,9 +1,8 @@
-// src/modules/jobs/graphql/jobQueries.ts
 import { graphql } from 'react-relay';
 
-export const JobsQuery = graphql`
-  query jobQueries_JobsQuery {
-    jobs {
+export const PublicJobsQuery = graphql`
+  query jobQueries_PublicJobsQuery {
+    publicJobs {
       id
       title
       description
@@ -11,7 +10,20 @@ export const JobsQuery = graphql`
       skillsRequired
       benefits
       createdAt
-      applicantCount
+    }
+  }
+`;
+
+export const AdminJobsQuery = graphql`
+  query jobQueries_AdminJobsQuery($search: String, $status: JobStatus, $skip: Int, $take: Int) {
+    jobs(search: $search, status: $status, skip: $skip, take: $take) {
+      id
+      title
+      description
+      status
+      type
+      applicants
+      createdAt
     }
   }
 `;

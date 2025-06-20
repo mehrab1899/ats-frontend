@@ -3,13 +3,13 @@
 import React from "react";
 import { useParams } from "next/navigation";
 import ApplicationForm from "@/components/ApplicationForm";
-import { useJobs } from "@/modules/jobs/hooks/useJobs";
+import { usePublicJobs } from "@/modules/jobs/hooks/usePublicJobs";
 
 export default function ApplyPage() {
     const params = useParams();
-    const jobId = params?.id; const { jobs } = useJobs();
+    const jobId = params?.id; const { publicJobs } = usePublicJobs();
 
-    const selectedJob = jobs.find((job) => job.id === jobId);
+    const selectedJob = publicJobs.find((job) => job.id === jobId);
 
     if (!selectedJob) {
         return (
