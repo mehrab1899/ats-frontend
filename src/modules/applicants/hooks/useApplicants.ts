@@ -1,15 +1,19 @@
 import { useLazyLoadQuery } from 'react-relay';
+import { useMemo } from 'react';
+import { ApplicantsQuery } from '../graphql/applicantsQuery';
 import { applicantsQuery_ApplicantsQuery } from '@/__generated__/applicantsQuery_ApplicantsQuery.graphql';
-import { ApplicantsQuery } from '../graphql/applicantsQuery'; // Correctly import the query name
 
 export const useApplicants = (search?: string, stage?: string, skip: number = 0, take: number = 10) => {
-    const data = useLazyLoadQuery<applicantsQuery_ApplicantsQuery>(ApplicantsQuery, {
+    // Memoize the query variables to avoid excessive re-fetches
+    const queryVariables = useMemo(() => ({
         search,
         stage,
         skip,
         take,
-    }, {
-        fetchPolicy: 'store-or-network', // Use cache if available, otherwise fetch from network
+    }), [search, stage, skip, take]);  // Update only when the relevant params change
+
+    const data = useLazyLoadQuery<applicantsQuery_ApplicantsQuery>(ApplicantsQuery, queryVariables, {
+        fetchPolicy: 'store-or-network',
     });
 
     return {

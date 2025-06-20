@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import StatCardsGrid from '@/components/admin/dashboard/StatCardsGrid';
 import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
 import SearchField from '@/components/SearchField';
@@ -18,10 +18,12 @@ export default function DashboardPage() {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [selectedFilter, setSelectedFilter] = useState<string>(FILTERS[0]);
 
-    const { applicants } = useApplicants('', 'APPLIED', 0, 10);
+    const memoizedSearchTerm = useMemo(() => searchTerm, [searchTerm]);
+
+    const { applicants } = useApplicants(memoizedSearchTerm, 'APPLIED', 0, 10);
     console.log('applicantData', applicants)
 
-    const { adminJobs } = useAdminJobs('', 'OPEN', 0, 10); // Example usage with search and pagination
+    const { adminJobs } = useAdminJobs(memoizedSearchTerm, 'OPEN', 0, 10); // Example usage with search and pagination
     console.log('adminJobs', adminJobs);
 
     return (
