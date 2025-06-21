@@ -1,4 +1,5 @@
 import { Column } from '@/components/DataTable';
+import Link from 'next/link';
 import { FaEdit, FaArchive } from 'react-icons/fa';
 
 export type Job = {
@@ -14,7 +15,13 @@ export type Job = {
 
 
 export const jobColumns: Column<Job>[] = [
-    { key: 'title', label: 'Title' },
+    {
+        key: 'title', label: 'Title', render: (val, row) => (
+            <Link href={`/job/${row.id}`} passHref>
+                <span className="text-blue-600 hover:underline">{val}</span>
+            </Link>
+        ),
+    },
     { key: 'description', label: 'Description' },
     { key: 'status', label: 'Status' },
     { key: 'type', label: 'Job Type' },
