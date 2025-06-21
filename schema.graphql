@@ -48,6 +48,18 @@ type AdminJob {
   createdAt: String!
 }
 
+type Job {
+  id: String!
+  title: String!
+  description: String!
+  status: JobStatus!
+  type: JobType!
+  skillsRequired: [String!]!
+  benefits: [String!]!
+  createdAt: String!
+  applicants: Int!
+}
+
 type JobsResponse {
   jobs: [AdminJob!]!
   totalJobsCount: Int!
@@ -65,6 +77,7 @@ input JobInput {
 type Query {
   publicJobs: [PublicJob!]!
   jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): JobsResponse!
+  getJobById(id: String!): Job!
   applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
 }
 
