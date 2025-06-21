@@ -7,7 +7,7 @@ import SearchField from '@/components/SearchField';
 import DataTable from '@/components/DataTable';
 import Pagination from '@/components/Pagination'; // Import Pagination component
 import { jobColumns } from '../jobs/columns';
-import { applicantColumns } from '../applicants/columns';
+import { applicantColumns } from '@/utils/applicantColumns';
 import { useApplicants } from '@/modules/applicants/hooks/useApplicants';
 import { useAdminJobs } from '@/modules/jobs/hooks/useAdminJobs';
 
@@ -20,7 +20,7 @@ export default function DashboardPage() {
     const [selectedFilter, setSelectedFilter] = useState<string>(FILTERS[0]);
 
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [pageSize] = useState<number>(1); // You can adjust this for pagination
+    const [pageSize] = useState<number>(10); // You can adjust this for pagination
 
     const memoizedSearchTerm = useMemo(() => searchTerm, [searchTerm]);
 

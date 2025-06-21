@@ -1,5 +1,6 @@
 import { Column } from '@/components/DataTable';
 import { FaArchive, FaEdit } from 'react-icons/fa';
+import Link from 'next/link';
 
 export type Applicant = {
     id: string;
@@ -11,7 +12,15 @@ export type Applicant = {
 };
 
 export const applicantColumns: Column<Applicant>[] = [
-    { key: 'name', label: 'Name' },
+    {
+        key: 'name',
+        label: 'Name',
+        render: (val, row) => (
+            <Link href={`/applicant/${row.id}`} passHref>
+                <span className="text-blue-600 hover:underline">{val}</span>
+            </Link>
+        ),
+    },
     { key: 'email', label: 'Email' },
     { key: 'stage', label: 'Stage' },
     { key: 'position', label: 'Position' },
