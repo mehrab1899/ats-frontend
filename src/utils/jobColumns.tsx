@@ -1,4 +1,5 @@
 import { Column } from '@/components/DataTable';
+import Link from 'next/link';
 import { FaEdit, FaArchive } from 'react-icons/fa';
 
 export type Job = {
@@ -14,7 +15,13 @@ export type Job = {
 
 
 export const jobColumns: Column<Job>[] = [
-    { key: 'title', label: 'Title' },
+    {
+        key: 'title', label: 'Title', render: (val, row) => (
+            <Link href={`/job/${row.id}?mode=view`} passHref>
+                <span className="text-blue-600 hover:underline">{val}</span>
+            </Link>
+        ),
+    },
     { key: 'description', label: 'Description' },
     { key: 'status', label: 'Status' },
     { key: 'type', label: 'Job Type' },
@@ -29,11 +36,13 @@ export const jobColumns: Column<Job>[] = [
         label: 'Actions',
         render: (_val, row) => (
             <div className="flex gap-2">
-                <button
-                    className="flex items-center gap-1 px-4 py-2 rounded-full text-[#012c56] border border-[#012c56] hover:bg-[#E6EDF4] transition duration-150"
-                >
-                    <FaEdit className="text-sm" />
-                </button>
+                <Link href={`/job/${row.id}?mode=edit`} passHref>
+                    <button
+                        className="flex items-center gap-1 px-4 py-2 rounded-full text-[#012c56] border border-[#012c56] hover:bg-[#E6EDF4] transition duration-150"
+                    >
+                        <FaEdit className="text-sm" />
+                    </button>
+                </Link>
                 <button
                     className="flex items-center gap-1 px-4 py-2 rounded-full text-red-600 border border-red-600 hover:bg-red-100 transition duration-150"
                 >

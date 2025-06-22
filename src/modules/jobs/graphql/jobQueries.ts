@@ -30,3 +30,19 @@ export const AdminJobsQuery = graphql`
     }
   }
 `;
+
+export const GetJobByIdQuery = graphql`
+  query jobQueries_GetJobByIdQuery($id: String!) {
+    getJobById(id: $id) {
+      id
+      title
+      description
+      status
+      type
+      skillsRequired
+      benefits
+      createdAt
+      applicants
+    }
+  }
+`;

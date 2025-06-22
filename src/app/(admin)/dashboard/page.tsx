@@ -6,7 +6,7 @@ import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
 import SearchField from '@/components/SearchField';
 import DataTable from '@/components/DataTable';
 import Pagination from '@/components/Pagination'; // Import Pagination component
-import { jobColumns } from '../jobs/columns';
+import { jobColumns } from '@/utils/jobColumns';
 import { applicantColumns } from '@/utils/applicantColumns';
 import { useApplicants } from '@/modules/applicants/hooks/useApplicants';
 import { useAdminJobs } from '@/modules/jobs/hooks/useAdminJobs';
