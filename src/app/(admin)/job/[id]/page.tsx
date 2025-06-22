@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation'; // ✅ Correct import for App Router
+import { useParams, useSearchParams } from 'next/navigation'; // ✅ Correct import for App Router
 import { useJobById } from '@/modules/jobs/hooks/useJobById';
 import TextInput from '@/components/TextInput';
 import SelectInput from '@/components/SelectInput';
@@ -10,12 +10,11 @@ import Button from '@/components/Button';
 
 const JobDetailForm = () => {
     const params = useParams();
+    const searchParams = useSearchParams();
     const id = params?.id as string;
-    console.log('id', id)
+    const mode = searchParams.get('mode'); // 'view' or 'edit'
 
-    // Fetch job data
-    const data = useJobById(id);
-    console.log('data', data)
+    const isViewMode = mode === 'view';
 
     const [form, setForm] = useState({
         title: '',
@@ -28,7 +27,8 @@ const JobDetailForm = () => {
         benefits: ''
     });
 
-    // When data loads, populate form state
+    const data = useJobById(id);
+
     useEffect(() => {
         if (data?.getJobById) {
             const job = data.getJobById;
@@ -47,8 +47,8 @@ const JobDetailForm = () => {
 
     return (
         <form className="space-y-6 mt-6 w-full max-w-2xl" onSubmit={() => { }}>
-            <TextInput label="Title" type="text" value={form.title} onChange={() => { }} />
-            <TextInput label="Description" type="text" value={form.description} onChange={() => { }} />
+            <TextInput label="Title" type="text" value={form.title} onChange={() => { }} disabled={isViewMode} />
+            <TextInput label="Description" type="text" value={form.description} onChange={() => { }} disabled={isViewMode} />
             <SelectInput
                 label="Status"
                 value={form.status}
@@ -58,6 +58,7 @@ const JobDetailForm = () => {
                     { label: 'Closed', value: 'CLOSED' },
                     { label: 'Draft', value: 'DRAFT' }
                 ]}
+                disabled={isViewMode}
             />
             <SelectInput
                 label="Job Type"
@@ -68,12 +69,16 @@ const JobDetailForm = () => {
                     { label: 'Part-time', value: 'Part-time' },
                     { label: 'Contract', value: 'Contract' }
                 ]}
+                disabled={isViewMode}
             />
-            <TextInput label="Applicants" type="number" value={form.applicants.toString()} onChange={() => { }} disabled={true} />
-            <TextInput label="Created At" type="text" value={new Date(form.createdAt).toLocaleDateString()} disabled={true} />
-            <TextInput label="Skills Required" type="text" value={form.skillsRequired} onChange={() => { }} />
-            <TextInput label="Benefits" type="text" value={form.benefits} onChange={() => { }} />
-            <Button label="Update Job" onClick={() => { }} />
+            <TextInput label="Applicants" type="number" value={form.applicants.toString()} disabled />
+            <TextInput label="Created At" type="text" value={new Date(form.createdAt).toLocaleDateString()} disabled />
+            <TextInput label="Skills Required" type="text" value={form.skillsRequired} onChange={() => { }} disabled={isViewMode} />
+            <TextInput label="Benefits" type="text" value={form.benefits} onChange={() => { }} disabled={isViewMode} />
+
+            {!isViewMode && (
+                <Button label="Update Job" onClick={() => { }} />
+            )}
         </form>
     );
 };

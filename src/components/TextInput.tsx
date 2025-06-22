@@ -20,7 +20,8 @@ const TextInput = ({ label, type, value, onChange, placeholder, className, disab
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className={`w-full p-3 border border-gray-300 rounded-md focus:outline-none 
+    ${disabled ? 'bg-gray-100 cursor-not-allowed' : 'focus:ring-2 focus:ring-blue-500'}`}
         disabled={disabled}
       />
     </div>
