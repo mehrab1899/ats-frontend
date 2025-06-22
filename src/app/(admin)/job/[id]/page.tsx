@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import { useJobById } from '@/modules/jobs/hooks/useJobById';
 import { useUpdateJob } from '@/modules/jobs/hooks/useUpdateJob';
@@ -57,19 +57,25 @@ const JobDetailForm = () => {
         return errs;
     };
 
-    const isFormChanged = () => {
+    const isFormChanged = useMemo(() => {
         if (!initial) return false;
         return (
             form.title !== initial.title ||
             form.description !== initial.description ||
-            form.type !== initial.type ||
-            form.skillsRequired !== JSON.stringify(initial.skillsRequired, null, 2) ||
-            form.benefits !== JSON.stringify(initial.benefits, null, 2)
+            form.type !== JobTypeDisplayMap[initial.type as keyof typeof JobTypeDisplayMap] ||
+            form.skillsRequired !== JSON.stringify(initial.skillsRequired ?? '', null, 2) ||
+            form.benefits !== JSON.stringify(initial.benefits ?? '', null, 2)
         );
-    };
+    }, [form, initial]);
+
+    const isFormValid = useMemo(() => {
+        const v = validate();
+        return Object.keys(v).length === 0;
+    }, [form]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
         const validationErrors = validate();
         setErrors(validationErrors);
 
@@ -78,7 +84,7 @@ const JobDetailForm = () => {
             return;
         }
 
-        if (!isFormChanged()) {
+        if (!isFormChanged) {
             addToast('No changes detected.', 'error');
             return;
         }
@@ -108,7 +114,9 @@ const JobDetailForm = () => {
         }
     };
 
-    const handleChange = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (field: keyof typeof form) => (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    ) => {
         setForm(prev => ({ ...prev, [field]: e.target.value }));
         setErrors(prev => ({ ...prev, [field]: undefined }));
     };
@@ -160,7 +168,11 @@ const JobDetailForm = () => {
 
                 {!isViewMode && (
                     <div className="flex justify-start">
-                        <Button label={isInFlight ? 'Updating...' : 'Update Job'} onClick={handleSubmit} />
+                        <Button
+                            label={isInFlight ? 'Updating...' : 'Update Job'}
+                            onClick={handleSubmit}
+                            className={`${(!isFormChanged || !isFormValid || isInFlight) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        />
                     </div>
                 )}
             </form>
