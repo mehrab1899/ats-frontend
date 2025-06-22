@@ -1,23 +1,10 @@
-import { graphql, useLazyLoadQuery } from 'react-relay';
+import { useLazyLoadQuery } from 'react-relay';
 import type { jobQueries_GetJobByIdQuery } from '@/__generated__/jobQueries_GetJobByIdQuery.graphql';
+import { GetJobByIdQuery } from '@/modules/jobs/graphql/jobQueries';
 
 export function useJobById(id: string) {
-    return useLazyLoadQuery<jobQueries_GetJobByIdQuery>(
-        graphql`
-      query jobQueries_GetJobByIdQuery($id: String!) {
-        getJobById(id: $id) {
-          id
-          title
-          description
-          status
-          type
-          skillsRequired
-          benefits
-          createdAt
-          applicants
-        }
-      }
-    `,
-        { id }
-    );
+  return useLazyLoadQuery<jobQueries_GetJobByIdQuery>(
+    GetJobByIdQuery,
+    { id }
+  );
 }

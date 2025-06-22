@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ee8d6a9ba7e689e7026ab627bb3403a>>
+ * @generated SignedSource<<c5a0cd0cd5a1d031e968cf33b3c14033>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,32 @@
 import { ConcreteRequest } from 'relay-runtime';
 export type JobStatus = "CLOSED" | "DRAFT" | "OPEN" | "%future added value";
 export type JobType = "CONTRACT" | "FULL_TIME" | "PART_TIME" | "%future added value";
-export type jobQueries_GetJobByIdQuery$variables = {
-  id: string;
+export type JobInput = {
+  benefits: any;
+  description: string;
+  skillsRequired: any;
+  status?: JobStatus | null | undefined;
+  title: string;
+  type?: JobType | null | undefined;
 };
-export type jobQueries_GetJobByIdQuery$data = {
-  readonly getJobById: {
+export type jobMutations_UpdateJobMutation$variables = {
+  id: string;
+  input: JobInput;
+};
+export type jobMutations_UpdateJobMutation$data = {
+  readonly updateJob: {
     readonly applicants: number;
-    readonly benefits: any;
     readonly createdAt: string;
     readonly description: string;
     readonly id: string;
-    readonly skillsRequired: any;
     readonly status: JobStatus;
     readonly title: string;
     readonly type: JobType;
   };
 };
-export type jobQueries_GetJobByIdQuery = {
-  response: jobQueries_GetJobByIdQuery$data;
-  variables: jobQueries_GetJobByIdQuery$variables;
+export type jobMutations_UpdateJobMutation = {
+  response: jobMutations_UpdateJobMutation$data;
+  variables: jobMutations_UpdateJobMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -38,6 +45,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "input"
   }
 ],
 v1 = [
@@ -48,11 +60,16 @@ v1 = [
         "kind": "Variable",
         "name": "id",
         "variableName": "id"
+      },
+      {
+        "kind": "Variable",
+        "name": "input",
+        "variableName": "input"
       }
     ],
-    "concreteType": "Job",
+    "concreteType": "AdminJob",
     "kind": "LinkedField",
-    "name": "getJobById",
+    "name": "updateJob",
     "plural": false,
     "selections": [
       {
@@ -94,14 +111,7 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "skillsRequired",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "benefits",
+        "name": "applicants",
         "storageKey": null
       },
       {
@@ -109,13 +119,6 @@ v1 = [
         "args": null,
         "kind": "ScalarField",
         "name": "createdAt",
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "applicants",
         "storageKey": null
       }
     ],
@@ -127,29 +130,29 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "jobQueries_GetJobByIdQuery",
+    "name": "jobMutations_UpdateJobMutation",
     "selections": (v1/*: any*/),
-    "type": "Query",
+    "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "jobQueries_GetJobByIdQuery",
+    "name": "jobMutations_UpdateJobMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "0497bdabcb551b1f41a627f72eaaf9cf",
+    "cacheID": "cb59a37764c3456ddca9ac560f3dda49",
     "id": null,
     "metadata": {},
-    "name": "jobQueries_GetJobByIdQuery",
-    "operationKind": "query",
-    "text": "query jobQueries_GetJobByIdQuery(\n  $id: String!\n) {\n  getJobById(id: $id) {\n    id\n    title\n    description\n    status\n    type\n    skillsRequired\n    benefits\n    createdAt\n    applicants\n  }\n}\n"
+    "name": "jobMutations_UpdateJobMutation",
+    "operationKind": "mutation",
+    "text": "mutation jobMutations_UpdateJobMutation(\n  $id: ID!\n  $input: JobInput!\n) {\n  updateJob(id: $id, input: $input) {\n    id\n    title\n    description\n    status\n    type\n    applicants\n    createdAt\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3f47d1ab93bb6285504625a2b64b6cfd";
+(node as any).hash = "6b83fb3180756864f2e55449dc2ef4ab";
 
 export default node;

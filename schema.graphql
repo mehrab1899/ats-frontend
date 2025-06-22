@@ -54,8 +54,8 @@ type Job {
   description: String!
   status: JobStatus!
   type: JobType!
-  skillsRequired: [String!]!
-  benefits: [String!]!
+  skillsRequired: JSON!
+  benefits: JSON!
   createdAt: String!
   applicants: Int!
 }
