@@ -81,6 +81,8 @@ type Query {
   getJobById(id: String!): Job!
   applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
   getApplicantById(id: String!): Applicant!
+  dashboardStats: DashboardStats!
+  monthlyTrends: [MonthlyStats!]!
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -135,4 +137,18 @@ input ApplicantTextInput {
   phone: String!
   jobId: String!
   message: String
+}
+
+type DashboardStats {
+  activeJobs: Int!
+  totalApplicants: Int!
+  topJob: String!
+  shortlistedCount: Int!
+}
+
+type MonthlyStats {
+  month: String!
+  jobs: Int!
+  applicants: Int!
+  hired: Int!
 }
