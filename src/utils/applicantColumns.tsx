@@ -1,6 +1,7 @@
 import { Column } from '@/components/DataTable';
 import { FaArchive, FaEdit } from 'react-icons/fa';
 import Link from 'next/link';
+import ApplicantStageAction from '@/app/(admin)/applicant/ApplicantStageAction';
 
 export type Applicant = {
     id: string;
@@ -34,11 +35,7 @@ export const applicantColumns: Column<Applicant>[] = [
         label: 'Actions',
         render: (_val, row) => (
             <div className="flex gap-2">
-                <button
-                    className="flex items-center gap-1 px-4 py-2 rounded-full text-red-600 border border-red-600 hover:bg-red-100 transition duration-150"
-                >
-                    <FaArchive className="text-sm" />
-                </button>
+                <ApplicantStageAction id={row.id} currentStage={row.stage} />
             </div>
         ),
     }
