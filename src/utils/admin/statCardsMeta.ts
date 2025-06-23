@@ -31,4 +31,11 @@ export const STAT_CARD_META: StatCardMeta[] = [
         bgColor: 'bg-[#FFECE7]',
         textColor: 'text-[#C75B39]',
     },
+    {
+        key: 'shortlistedCount',
+        label: 'Shortlisted Count',
+        icon: Users,
+        bgColor: 'bg-[#F6F4FF]',
+        textColor: 'text-[#4B3D8F]',
+    },
 ];

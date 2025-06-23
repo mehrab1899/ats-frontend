@@ -1,19 +1,9 @@
-'use client';
-
-import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
-} from 'recharts';
-
-const data = [
-    { month: 'Jan', jobs: 4 },
-    { month: 'Feb', jobs: 7 },
-    { month: 'Mar', jobs: 5 },
-    { month: 'Apr', jobs: 9 },
-    { month: 'May', jobs: 12 },
-    { month: 'Jun', jobs: 8 },
-];
+import { useMonthlyTrends } from '@/modules/dashboard/hooks/useMonthlyTrends';
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 export default function JobTrendChart() {
+    const data = useMonthlyTrends();
+
     return (
         <div className="bg-white shadow-md rounded-lg p-6">
             <h2 className="text-lg font-semibold mb-4 text-[#012C56]">Monthly Job Postings</h2>
@@ -24,6 +14,8 @@ export default function JobTrendChart() {
                     <YAxis />
                     <Tooltip />
                     <Line type="monotone" dataKey="jobs" stroke="#012C56" strokeWidth={2} />
+                    <Line type="monotone" dataKey="applicants" stroke="#2e4257" strokeWidth={2} />
+                    <Line type="monotone" dataKey="hired" stroke="#00a86b" strokeWidth={2} />
                 </LineChart>
             </ResponsiveContainer>
         </div>
