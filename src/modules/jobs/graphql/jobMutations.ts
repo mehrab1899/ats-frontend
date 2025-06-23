@@ -13,3 +13,17 @@ export const UpdateJobMutation = graphql`
     }
   }
 `;
+
+export const CreateJobMutation = graphql`
+  mutation jobMutations_CreateJobMutation($input: JobInput!) {
+    createJob(input: $input) {
+      id
+      title
+      description
+      status
+      type
+      applicants
+      createdAt
+    }
+  }
+`;

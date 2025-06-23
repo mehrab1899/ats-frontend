@@ -1,4 +1,4 @@
-import { LayoutDashboard, Briefcase, Users } from 'lucide-react';
+import { LayoutDashboard, Briefcase } from 'lucide-react';
 
 const navLinks = [
     {
@@ -7,14 +7,9 @@ const navLinks = [
         icon: LayoutDashboard,
     },
     {
-        label: 'Jobs',
-        href: '/jobs',
+        label: 'Job',
+        href: '/job',
         icon: Briefcase,
-    },
-    {
-        label: 'Applicants',
-        href: '/applicants',
-        icon: Users,
     },
 ];
 
