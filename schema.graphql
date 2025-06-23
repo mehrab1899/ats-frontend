@@ -79,6 +79,7 @@ type Query {
   jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): JobsResponse!
   getJobById(id: String!): Job!
   applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
+  getApplicantById(id: String!): Applicant!
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -106,6 +107,11 @@ type ApplicantsResponse {
   totalApplicantsCount: Int!
 }
 
+type JobRef {
+  id: String!
+  title: String!
+}
+
 type Applicant {
   id: String!
   firstName: String!
@@ -113,6 +119,7 @@ type Applicant {
   email: String!
   phone: String!
   jobId: String!
+  job: JobRef!
   stage: Stage!
   cv: String!
   coverLetter: String!
