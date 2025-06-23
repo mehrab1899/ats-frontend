@@ -5,38 +5,54 @@ import StatCardsGrid from '@/components/admin/dashboard/StatCardsGrid';
 import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
 import SearchField from '@/components/SearchField';
 import DataTable from '@/components/DataTable';
-import Pagination from '@/components/Pagination'; // Import Pagination component
+import Pagination from '@/components/Pagination';
 import { jobColumns } from '@/utils/jobColumns';
 import { applicantColumns } from '@/utils/applicantColumns';
 import { useApplicants } from '@/modules/applicants/hooks/useApplicants';
 import { useAdminJobs } from '@/modules/jobs/hooks/useAdminJobs';
 
 const TABS = ['Jobs', 'Applicants'];
-const FILTERS = ['All', 'Active', 'Archived'];
+const JOB_FILTERS = ['ALL', 'OPEN', 'DRAFT', 'CLOSED'];
+const APPLICANT_FILTERS = ['APPLIED', 'SHORTLISTED', 'INTERVIEWED', 'HIRED', 'REJECTED'];
 
 export default function DashboardPage() {
     const [selectedTab, setSelectedTab] = useState<string>(TABS[0]);
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [selectedFilter, setSelectedFilter] = useState<string>(FILTERS[0]);
+
+    // 🔹 Separate filters
+    const [jobFilter, setJobFilter] = useState<'ALL' | 'OPEN' | 'DRAFT' | 'CLOSED'>('ALL');
+    const [applicantFilter, setApplicantFilter] = useState<'APPLIED' | 'SHORTLISTED' | 'INTERVIEWED' | 'HIRED' | 'REJECTED'>('APPLIED');
 
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [pageSize] = useState<number>(10); // You can adjust this for pagination
+    const [pageSize] = useState<number>(10);
 
     const memoizedSearchTerm = useMemo(() => searchTerm, [searchTerm]);
 
-    // Fetch data with pagination
-    const { applicants } = useApplicants(memoizedSearchTerm, 'APPLIED', (currentPage - 1) * pageSize, pageSize);
-    const { adminJobs } = useAdminJobs(memoizedSearchTerm, 'OPEN', (currentPage - 1) * pageSize, pageSize);
+    // 🔹 Derive status/stage filters from selected tab
+    const statusFilter = useMemo(() => {
+        return selectedTab === 'Jobs' && jobFilter !== 'ALL' ? jobFilter : undefined;
+    }, [selectedTab, jobFilter]);
 
-    console.log('applicants', applicants);
-    console.log('adminJobs', adminJobs)
+    const stageFilter = useMemo(() => {
+        return selectedTab === 'Applicants' ? applicantFilter : undefined;
+    }, [selectedTab, applicantFilter]);
+
+    // 🔹 Fetch data
+    const { applicants } = useApplicants(memoizedSearchTerm, stageFilter, (currentPage - 1) * pageSize, pageSize);
+    const { adminJobs } = useAdminJobs(memoizedSearchTerm, statusFilter, (currentPage - 1) * pageSize, pageSize);
+
     const totalPagesApplicants = Math.ceil(applicants.totalApplicantsCount / pageSize);
     const totalPagesJobs = Math.ceil(adminJobs?.totalJobsCount / pageSize);
 
-    // Reset the page when the selectedTab changes
+    // 🔹 Reset page on relevant change
     useEffect(() => {
-        setCurrentPage(1); // Reset to page 1 when switching tabs
-    }, [selectedTab]);
+        setCurrentPage(1);
+    }, [selectedTab, searchTerm, jobFilter, applicantFilter]);
+
+    // 🔹 Active filters + setter based on tab
+    const activeFilters = selectedTab === 'Jobs' ? JOB_FILTERS : APPLICANT_FILTERS;
+    const selectedFilter = selectedTab === 'Jobs' ? jobFilter : applicantFilter;
+    const setSelectedFilter = selectedTab === 'Jobs' ? setJobFilter : setApplicantFilter;
 
     return (
         <div className="space-y-10">
@@ -79,7 +95,7 @@ export default function DashboardPage() {
 
                 {/* Row 2: Filter Pills */}
                 <div className="flex items-center flex-wrap gap-2 px-6 py-3">
-                    {FILTERS.map((filter) => (
+                    {activeFilters.map((filter) => (
                         <button
                             key={filter}
                             onClick={() => setSelectedFilter(filter)}
@@ -88,7 +104,7 @@ export default function DashboardPage() {
                                 : 'bg-gray-100 text-gray-800 hover:bg-gray-200 border-gray-300'
                                 }`}
                         >
-                            {filter}
+                            {filter === 'ALL' ? 'All' : filter.charAt(0) + filter.slice(1).toLowerCase()}
                         </button>
                     ))}
                 </div>
