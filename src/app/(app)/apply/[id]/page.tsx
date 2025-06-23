@@ -7,9 +7,10 @@ import { usePublicJobs } from "@/modules/jobs/hooks/usePublicJobs";
 
 export default function ApplyPage() {
     const params = useParams();
-    const jobId = params?.id; const { publicJobs } = usePublicJobs();
+    const jobId = params?.id;
+    const { publicJobs } = usePublicJobs();
 
-    const selectedJob = publicJobs.find((job) => job.id === jobId);
+    const selectedJob = publicJobs.find((job: any) => job.id === jobId);
 
     if (!selectedJob) {
         return (
@@ -17,6 +18,16 @@ export default function ApplyPage() {
                 <p className="text-lg text-red-500 font-medium">Job not found.</p>
             </div>
         );
+    }
+
+    let parsedSkills: string[] = [];
+    let parsedBenefits: string[] = [];
+
+    try {
+        parsedSkills = JSON.parse(selectedJob.skillsRequired || "[]");
+        parsedBenefits = JSON.parse(selectedJob.benefits || "[]");
+    } catch (error) {
+        console.error("Error parsing skills or benefits", error);
     }
 
     return (
@@ -39,7 +50,7 @@ export default function ApplyPage() {
                 <div>
                     <h2 className="text-xl font-semibold text-gray-800">Skills Required</h2>
                     <ul className="list-disc list-inside text-gray-600">
-                        {selectedJob.skillsRequired.map((skill, idx) => (
+                        {parsedSkills.map((skill, idx) => (
                             <li key={idx}>{skill}</li>
                         ))}
                     </ul>
@@ -48,7 +59,7 @@ export default function ApplyPage() {
                 <div>
                     <h2 className="text-xl font-semibold text-gray-800">Benefits</h2>
                     <ul className="list-disc list-inside text-gray-600">
-                        {selectedJob.benefits.map((benefit, idx) => (
+                        {parsedBenefits.map((benefit, idx) => (
                             <li key={idx}>{benefit}</li>
                         ))}
                     </ul>

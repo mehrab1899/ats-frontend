@@ -16,3 +16,24 @@ export const ApplicantsQuery = graphql`
     }
   }
 `;
+
+export const GetApplicantByIdQuery = graphql`
+  query applicantsQuery_GetApplicantByIdQuery($id: String!) {
+    getApplicantById(id: $id) {
+      id
+      firstName
+      lastName
+      email
+      phone
+      stage
+      job {
+        id
+        title
+      }
+      cv
+      coverLetter
+      message
+      appliedAt
+    }
+  }
+`;
