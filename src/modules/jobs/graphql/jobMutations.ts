@@ -27,3 +27,10 @@ export const CreateJobMutation = graphql`
     }
   }
 `;
+
+export const UpdateJobStatusMutation = graphql`mutation jobMutations_UpdateJobStatusMutation($id: ID!, $status: JobStatus!) {
+    updateJobStatus(id: $id, status: $status) {
+      id
+      status
+    }
+  }`;

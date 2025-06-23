@@ -1,3 +1,4 @@
+import JobStatusAction from '@/components/admin/job/JobStatusAction';
 import { Column } from '@/components/DataTable';
 import Link from 'next/link';
 import { FaEdit, FaArchive } from 'react-icons/fa';
@@ -43,11 +44,7 @@ export const jobColumns: Column<Job>[] = [
                         <FaEdit className="text-sm" />
                     </button>
                 </Link>
-                <button
-                    className="flex items-center gap-1 px-4 py-2 rounded-full text-red-600 border border-red-600 hover:bg-red-100 transition duration-150"
-                >
-                    <FaArchive className="text-sm" />
-                </button>
+                <JobStatusAction id={row.id} currentStatus={row.status} />
             </div>
         ),
     }
