@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ee8d6a9ba7e689e7026ab627bb3403a>>
+ * @generated SignedSource<<4d108681b0b97ed5d9d5ec4bc57e109f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -140,16 +140,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "0497bdabcb551b1f41a627f72eaaf9cf",
+    "cacheID": "cbf94ff4c04702117e752e7203a932e5",
     "id": null,
     "metadata": {},
     "name": "jobQueries_GetJobByIdQuery",
     "operationKind": "query",
-    "text": "query jobQueries_GetJobByIdQuery(\n  $id: String!\n) {\n  getJobById(id: $id) {\n    id\n    title\n    description\n    status\n    type\n    skillsRequired\n    benefits\n    createdAt\n    applicants\n  }\n}\n"
+    "text": "query jobQueries_GetJobByIdQuery(\n  $id: ID!\n) {\n  getJobById(id: $id) {\n    id\n    title\n    description\n    status\n    type\n    skillsRequired\n    benefits\n    createdAt\n    applicants\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3f47d1ab93bb6285504625a2b64b6cfd";
+(node as any).hash = "22c7e0206338d31a01a60b2e3a3f7e5c";
 
 export default node;
