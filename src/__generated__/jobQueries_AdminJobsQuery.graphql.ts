@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<255603a7b31280421d475e3ce2669b96>>
+ * @generated SignedSource<<8dda0dba1a755f6a5831e6ef64771e6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type jobQueries_AdminJobsQuery$variables = {
 export type jobQueries_AdminJobsQuery$data = {
   readonly jobs: {
     readonly jobs: ReadonlyArray<{
+      readonly __typename: "AdminJob";
       readonly applicants: number;
       readonly createdAt: string;
       readonly description: string;
@@ -95,6 +96,13 @@ v4 = [
         "name": "jobs",
         "plural": true,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "__typename",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -186,16 +194,16 @@ return {
     "selections": (v4/*: any*/)
   },
   "params": {
-    "cacheID": "6539645e1899dbb9be4c7498b5fd9612",
+    "cacheID": "0e543628206051d10bd8e85fc7de8638",
     "id": null,
     "metadata": {},
     "name": "jobQueries_AdminJobsQuery",
     "operationKind": "query",
-    "text": "query jobQueries_AdminJobsQuery(\n  $search: String\n  $status: JobStatus\n  $skip: Int\n  $take: Int\n) {\n  jobs(search: $search, status: $status, skip: $skip, take: $take) {\n    jobs {\n      id\n      title\n      description\n      status\n      type\n      applicants\n      createdAt\n    }\n    totalJobsCount\n  }\n}\n"
+    "text": "query jobQueries_AdminJobsQuery(\n  $search: String\n  $status: JobStatus\n  $skip: Int\n  $take: Int\n) {\n  jobs(search: $search, status: $status, skip: $skip, take: $take) {\n    jobs {\n      __typename\n      id\n      title\n      description\n      status\n      type\n      applicants\n      createdAt\n    }\n    totalJobsCount\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "54e2a49ce938e7c252b7f2f60d4298d9";
+(node as any).hash = "7cea214096f7fcd03aa3dd10c2f5f130";
 
 export default node;

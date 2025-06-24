@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c99f32b59f293b5cec58d0d6e5e9706>>
+ * @generated SignedSource<<ab73de0e23e8bdb4fac62f4e607c03bc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -171,16 +171,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "cf0db46495a1fbbfa78d9b77905fc838",
+    "cacheID": "a2089bdd3258303096a18381d13795ac",
     "id": null,
     "metadata": {},
     "name": "applicantsQuery_GetApplicantByIdQuery",
     "operationKind": "query",
-    "text": "query applicantsQuery_GetApplicantByIdQuery(\n  $id: String!\n) {\n  getApplicantById(id: $id) {\n    id\n    firstName\n    lastName\n    email\n    phone\n    stage\n    job {\n      id\n      title\n    }\n    cv\n    coverLetter\n    message\n    appliedAt\n  }\n}\n"
+    "text": "query applicantsQuery_GetApplicantByIdQuery(\n  $id: ID!\n) {\n  getApplicantById(id: $id) {\n    id\n    firstName\n    lastName\n    email\n    phone\n    stage\n    job {\n      id\n      title\n    }\n    cv\n    coverLetter\n    message\n    appliedAt\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0e7f08e2dec4983d2c1a2eae4745bab2";
+(node as any).hash = "4105f76db3430074a1e8507684bcc588";
 
 export default node;

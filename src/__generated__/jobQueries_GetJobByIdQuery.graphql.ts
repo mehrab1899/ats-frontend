@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4d108681b0b97ed5d9d5ec4bc57e109f>>
+ * @generated SignedSource<<fd200113e1e0010e18edd783cef10d8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type jobQueries_GetJobByIdQuery$variables = {
 };
 export type jobQueries_GetJobByIdQuery$data = {
   readonly getJobById: {
+    readonly __typename: "Job";
     readonly applicants: number;
     readonly benefits: any;
     readonly createdAt: string;
@@ -55,6 +56,13 @@ v1 = [
     "name": "getJobById",
     "plural": false,
     "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "__typename",
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": null,
@@ -140,16 +148,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "cbf94ff4c04702117e752e7203a932e5",
+    "cacheID": "389bf9868616365d6f2ded116158d72d",
     "id": null,
     "metadata": {},
     "name": "jobQueries_GetJobByIdQuery",
     "operationKind": "query",
-    "text": "query jobQueries_GetJobByIdQuery(\n  $id: ID!\n) {\n  getJobById(id: $id) {\n    id\n    title\n    description\n    status\n    type\n    skillsRequired\n    benefits\n    createdAt\n    applicants\n  }\n}\n"
+    "text": "query jobQueries_GetJobByIdQuery(\n  $id: ID!\n) {\n  getJobById(id: $id) {\n    __typename\n    id\n    title\n    description\n    status\n    type\n    skillsRequired\n    benefits\n    createdAt\n    applicants\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "22c7e0206338d31a01a60b2e3a3f7e5c";
+(node as any).hash = "090b22fa60ec0054149b21b46767092e";
 
 export default node;

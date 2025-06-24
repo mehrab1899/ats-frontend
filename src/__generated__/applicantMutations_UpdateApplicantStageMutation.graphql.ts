@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fcf990eb6f0d99ac545fd4d72d3e880c>>
+ * @generated SignedSource<<7707321db2173333f72686d18efa6f2b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -94,16 +94,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "d75733a18002516f3bc32517fbddacb6",
+    "cacheID": "756376e68633607de67a0efa95587de4",
     "id": null,
     "metadata": {},
     "name": "applicantMutations_UpdateApplicantStageMutation",
     "operationKind": "mutation",
-    "text": "mutation applicantMutations_UpdateApplicantStageMutation(\n  $id: String!\n  $stage: Stage!\n) {\n  updateApplicantStage(id: $id, stage: $stage) {\n    id\n    stage\n  }\n}\n"
+    "text": "mutation applicantMutations_UpdateApplicantStageMutation(\n  $id: ID!\n  $stage: Stage!\n) {\n  updateApplicantStage(id: $id, stage: $stage) {\n    id\n    stage\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "56a896917d5833bdf1e9743825221814";
+(node as any).hash = "3cae4c5869ec67b52a9482ad3c2535b4";
 
 export default node;

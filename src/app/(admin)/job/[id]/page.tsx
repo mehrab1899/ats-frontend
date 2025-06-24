@@ -44,11 +44,24 @@ const JobDetailForm = () => {
                 description: initial.description || '',
                 status: initial.status || 'OPEN',
                 type: JobTypeDisplayMap[initial.type as keyof typeof JobTypeDisplayMap],
-                skillsRequired: Array.isArray(initial.skillsRequired) ? initial.skillsRequired : [],
-                benefits: Array.isArray(initial.benefits) ? initial.benefits : []
+                skillsRequired: parseArray(initial.skillsRequired),
+                benefits: parseArray(initial.benefits)
             });
         }
     }, [initial]);
+
+    const parseArray = (val: unknown): string[] => {
+        if (Array.isArray(val)) return val;
+        if (typeof val === 'string') {
+            try {
+                const parsed = JSON.parse(val);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch {
+                return [];
+            }
+        }
+        return [];
+    };
 
     const validate = () => {
         const errs: typeof errors = {};
@@ -62,7 +75,8 @@ const JobDetailForm = () => {
     const isFormChanged = useMemo(() => {
         if (!initial) return false;
 
-        const normalize = (arr: string[] | undefined) => (arr ?? []).slice().sort().join(',');
+        const normalize = (arr: unknown) =>
+            Array.isArray(arr) ? arr.slice().sort().join(',') : '';
         return (
             form.title !== initial.title ||
             form.description !== initial.description ||
