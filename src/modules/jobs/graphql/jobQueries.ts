@@ -32,7 +32,7 @@ export const AdminJobsQuery = graphql`
 `;
 
 export const GetJobByIdQuery = graphql`
-  query jobQueries_GetJobByIdQuery($id: String!) {
+  query jobQueries_GetJobByIdQuery($id: ID!) {
     getJobById(id: $id) {
       id
       title

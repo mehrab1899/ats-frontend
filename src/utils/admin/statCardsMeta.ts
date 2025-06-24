@@ -4,7 +4,7 @@ import { LucideIcon } from 'lucide-react';
 export type StatCardMeta = {
     key: string;
     label: string;
-    icon: LucideIcon; // component reference
+    icon: LucideIcon;
     bgColor: string;
     textColor: string;
 };
@@ -14,28 +14,29 @@ export const STAT_CARD_META: StatCardMeta[] = [
         key: 'activeJobs',
         label: 'Active Jobs',
         icon: Briefcase,
-        bgColor: 'bg-[#EDF7FF]',
+        bgColor: 'bg-gradient-to-r from-[#EDF7FF] to-[#C4D9F7]',
         textColor: 'text-[#004D99]',
     },
     {
         key: 'totalApplicants',
         label: 'Total Applicants',
         icon: Users,
-        bgColor: 'bg-[#F6F4FF]',
+        bgColor: 'bg-gradient-to-r from-[#F6F4FF] to-[#D7CCE0]',
         textColor: 'text-[#4B3D8F]',
     },
     {
         key: 'topJob',
-        label: 'Top Job: Frontend Engineer',
+        label: 'Top Job',
         icon: Star,
-        bgColor: 'bg-[#FFECE7]',
+        bgColor: 'bg-gradient-to-r from-[#FFECE7] to-[#FFBDAF]',
         textColor: 'text-[#C75B39]',
     },
     {
         key: 'shortlistedCount',
         label: 'Shortlisted Count',
         icon: Users,
-        bgColor: 'bg-[#F6F4FF]',
-        textColor: 'text-[#4B3D8F]',
+        // New grayish gradient for shortlisted card
+        bgColor: 'bg-gradient-to-r from-[#E5E5E5] to-[#B0B0B0]', 
+        textColor: 'text-[#003C6C]', // Dark blue text for clarity
     },
 ];

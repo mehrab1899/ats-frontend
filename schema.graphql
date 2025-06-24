@@ -2,6 +2,17 @@ type AuthPayload {
   token: String!
 }
 
+type Query {
+  _: Boolean
+  publicJobs: [PublicJob!]!
+  jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): JobsResponse!
+  getJobById(id: ID!): Job!
+  applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
+  getApplicantById(id: String!): Applicant!
+  dashboardStats: DashboardStats!
+  monthlyTrends: [MonthlyStats!]!
+}
+
 type Mutation {
   signup(email: String!, password: String!, firstName: String, lastName: String): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
@@ -50,7 +61,7 @@ type AdminJob {
 }
 
 type Job {
-  id: String!
+  id: ID!
   title: String!
   description: String!
   status: JobStatus!
@@ -73,16 +84,6 @@ input JobInput {
   type: JobType
   skillsRequired: JSON!
   benefits: JSON!
-}
-
-type Query {
-  publicJobs: [PublicJob!]!
-  jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): JobsResponse!
-  getJobById(id: String!): Job!
-  applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
-  getApplicantById(id: String!): Applicant!
-  dashboardStats: DashboardStats!
-  monthlyTrends: [MonthlyStats!]!
 }
 
 """The `Upload` scalar type represents a file upload."""
