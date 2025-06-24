@@ -1,10 +1,10 @@
 // src/modules/applicants/hooks/useApplicantById.ts
 import { useLazyLoadQuery } from 'react-relay';
 import { GetApplicantByIdQuery } from '../graphql/applicantsQuery';
-import { applicantQueries_GetApplicantByIdQuery } from '@/__generated__/applicantQueries_GetApplicantByIdQuery.graphql';
+import { applicantsQuery_GetApplicantByIdQuery } from '@/__generated__/applicantsQuery_GetApplicantByIdQuery.graphql';
 
 export const useApplicantById = (id: string) => {
-    const data = useLazyLoadQuery<applicantQueries_GetApplicantByIdQuery>(
+    const data = useLazyLoadQuery<applicantsQuery_GetApplicantByIdQuery>(
         GetApplicantByIdQuery,
         { id },
         { fetchPolicy: 'store-and-network' }

@@ -3,6 +3,7 @@ import { graphql } from 'react-relay';
 export const PublicJobsQuery = graphql`
   query jobQueries_PublicJobsQuery {
     publicJobs {
+      __typename
       id
       title
       description
@@ -10,6 +11,7 @@ export const PublicJobsQuery = graphql`
       skillsRequired
       benefits
       createdAt
+      context
     }
   }
 `;
@@ -18,6 +20,7 @@ export const AdminJobsQuery = graphql`
   query jobQueries_AdminJobsQuery($search: String, $status: JobStatus, $skip: Int, $take: Int) {
     jobs(search: $search, status: $status, skip: $skip, take: $take) {
       jobs {
+        __typename
         id
         title
         description
@@ -34,6 +37,7 @@ export const AdminJobsQuery = graphql`
 export const GetJobByIdQuery = graphql`
   query jobQueries_GetJobByIdQuery($id: ID!) {
     getJobById(id: $id) {
+      __typename
       id
       title
       description

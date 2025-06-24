@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aa4bcde562c5f2f60208f3c2fde45cd7>>
+ * @generated SignedSource<<a04e65bb82cacd966c7ee35b207a6484>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,9 @@ export type JobStatus = "CLOSED" | "DRAFT" | "OPEN" | "%future added value";
 export type jobQueries_PublicJobsQuery$variables = Record<PropertyKey, never>;
 export type jobQueries_PublicJobsQuery$data = {
   readonly publicJobs: ReadonlyArray<{
+    readonly __typename: "PublicJob";
     readonly benefits: any;
+    readonly context: string | null | undefined;
     readonly createdAt: string;
     readonly description: string;
     readonly id: string;
@@ -37,6 +39,13 @@ var v0 = [
     "name": "publicJobs",
     "plural": true,
     "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "__typename",
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": null,
@@ -85,6 +94,13 @@ var v0 = [
         "kind": "ScalarField",
         "name": "createdAt",
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "context",
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -108,16 +124,16 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "edced4ec5fa220af812cd8824ae96bcd",
+    "cacheID": "4f1fea239f997632590a5d3e2686f528",
     "id": null,
     "metadata": {},
     "name": "jobQueries_PublicJobsQuery",
     "operationKind": "query",
-    "text": "query jobQueries_PublicJobsQuery {\n  publicJobs {\n    id\n    title\n    description\n    status\n    skillsRequired\n    benefits\n    createdAt\n  }\n}\n"
+    "text": "query jobQueries_PublicJobsQuery {\n  publicJobs {\n    __typename\n    id\n    title\n    description\n    status\n    skillsRequired\n    benefits\n    createdAt\n    context\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "93c319c0d60a84da89260f95f3fdc72c";
+(node as any).hash = "cd57141d7d76b77a43792f2882b9d4f0";
 
 export default node;

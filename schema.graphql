@@ -8,7 +8,7 @@ type Query {
   jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): JobsResponse!
   getJobById(id: ID!): Job!
   applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
-  getApplicantById(id: String!): Applicant!
+  getApplicantById(id: ID!): Applicant!
   dashboardStats: DashboardStats!
   monthlyTrends: [MonthlyStats!]!
 }
@@ -20,7 +20,7 @@ type Mutation {
   updateJob(id: ID!, input: JobInput!): AdminJob!
   updateJobStatus(id: ID!, status: JobStatus!): AdminJob!
   submitApplicationText(input: ApplicantTextInput!, cv: Upload!, coverLetter: Upload!): Applicant!
-  updateApplicantStage(id: String!, stage: Stage!): Applicant!
+  updateApplicantStage(id: ID!, stage: Stage!): Applicant!
 }
 
 """
@@ -41,23 +41,25 @@ enum JobType {
 }
 
 type PublicJob {
-  id: String!
+  id: ID!
   title: String!
   description: String!
   status: JobStatus!
   skillsRequired: JSON!
   benefits: JSON!
   createdAt: String!
+  context: String
 }
 
 type AdminJob {
-  id: String!
+  id: ID!
   title: String!
   description: String!
   status: JobStatus!
   type: JobType!
   applicants: Int!
   createdAt: String!
+  context: String
 }
 
 type Job {
@@ -70,6 +72,7 @@ type Job {
   benefits: JSON!
   createdAt: String!
   applicants: Int!
+  context: String
 }
 
 type JobsResponse {
@@ -98,7 +101,7 @@ enum Stage {
 }
 
 type ApplicantRow {
-  id: String!
+  id: ID!
   name: String!
   email: String!
   stage: Stage!
@@ -112,17 +115,17 @@ type ApplicantsResponse {
 }
 
 type JobRef {
-  id: String!
+  id: ID!
   title: String!
 }
 
 type Applicant {
-  id: String!
+  id: ID!
   firstName: String!
   lastName: String!
   email: String!
   phone: String!
-  jobId: String!
+  jobId: ID!
   job: JobRef!
   stage: Stage!
   cv: String!
@@ -136,7 +139,7 @@ input ApplicantTextInput {
   lastName: String!
   email: String!
   phone: String!
-  jobId: String!
+  jobId: ID!
   message: String
 }
 

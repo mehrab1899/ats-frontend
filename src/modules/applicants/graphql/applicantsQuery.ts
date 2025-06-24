@@ -18,7 +18,7 @@ export const ApplicantsQuery = graphql`
 `;
 
 export const GetApplicantByIdQuery = graphql`
-  query applicantsQuery_GetApplicantByIdQuery($id: String!) {
+  query applicantsQuery_GetApplicantByIdQuery($id: ID!) {
     getApplicantById(id: $id) {
       id
       firstName
