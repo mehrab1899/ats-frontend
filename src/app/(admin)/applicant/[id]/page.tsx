@@ -19,7 +19,7 @@ const ApplicantDetail = () => {
     return (
         <div className="max-w-4xl mx-auto mt-10 px-6">
             <div className="bg-[#E6EDF4] rounded-2xl shadow-md p-8 border border-[#DDE6F0]">
-                <h2 className="text-3xl font-semibold text-[#012C56] mb-6">
+                <h2 className="text-3xl font-semibold text-[var(--primary-color)] mb-6">
                     {applicant.firstName} {applicant.lastName}
                 </h2>
 
@@ -44,7 +44,7 @@ const ApplicantDetail = () => {
                             href={applicant.cv}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block w-fit bg-[#012C56] hover:bg-[#0a1f3d] text-white px-4 py-2 rounded-md transition"
+                            className="inline-block w-fit bg-[var(--primary-color)] hover:bg-[#0a1f3d] text-white px-4 py-2 rounded-md transition"
                         >
                             View CV
                         </a>
@@ -56,7 +56,7 @@ const ApplicantDetail = () => {
                             href={applicant.coverLetter}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block w-fit bg-[#012C56] hover:bg-[#0a1f3d] text-white px-4 py-2 rounded-md transition"
+                            className="inline-block w-fit bg-[var(--primary-color)] hover:bg-[#0a1f3d] text-white px-4 py-2 rounded-md transition"
                         >
                             View Cover Letter
                         </a>
@@ -70,7 +70,7 @@ const ApplicantDetail = () => {
 const Info = ({ label, value }: { label: string; value: React.ReactNode }) => (
     <div>
         <Label>{label}</Label>
-        <p className="text-[#012C56] text-base font-medium mt-1 break-words">{value}</p>
+        <p className="text-[var(--primary-color)] text-base font-medium mt-1 break-words">{value}</p>
     </div>
 );
 
