@@ -108,7 +108,7 @@ const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
       <button
         type="submit"
         disabled={loading}
-        className="bg-[#012C56] text-white px-4 py-2 rounded hover:bg-gray-200 hover:text-[#012C56]"
+        className="bg-[var(--primary-color)] text-white px-4 py-2 rounded hover:bg-gray-200 hover:text-[var(--primary-color)]"
       >
         {loading ? 'Submitting...' : 'Submit Application'}
       </button>

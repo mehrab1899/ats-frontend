@@ -32,7 +32,7 @@ export default function ApplyPage() {
 
     return (
         <div className="max-w-4xl mx-auto py-10 px-4">
-            <h1 className="text-3xl font-bold text-[#012C56] mb-8 text-center">
+            <h1 className="text-3xl font-bold text-[var(--primary-color)] mb-8 text-center">
                 Apply for {selectedJob.title}
             </h1>
 
@@ -68,7 +68,7 @@ export default function ApplyPage() {
 
             <hr className="my-8 border-t border-gray-200" />
 
-            <h2 className="text-2xl font-bold text-[#012C56] mb-4">Application Form</h2>
+            <h2 className="text-2xl font-bold text-[var(--primary-color)] mb-4">Application Form</h2>
             <ApplicationForm jobId={jobId} />
         </div>
     );

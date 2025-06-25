@@ -13,7 +13,7 @@ export default function StatCard({
     value,
     icon,
     bgColor = 'bg-white',
-    textColor = 'text-[#012C56]',
+    textColor = 'text-[var(--primary-color)]',
 }: StatCardProps) {
     return (
         <div className={`${bgColor} shadow-md rounded-xl p-2 min-h-[160px] flex flex-col justify-between`}>

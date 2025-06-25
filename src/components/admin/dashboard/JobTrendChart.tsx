@@ -6,7 +6,7 @@ export default function JobTrendChart() {
 
     return (
         <div className="bg-white shadow-md rounded-lg p-6">
-            <h2 className="text-lg font-semibold mb-4 text-[#012C56]">Monthly Job Postings</h2>
+            <h2 className="text-lg font-semibold mb-4 text-[var(--primary-color)]">Monthly Job Postings</h2>
             <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={data}>
                     <CartesianGrid strokeDasharray="3 3" />

@@ -2,6 +2,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import RelayProvider from "@/lib/RelayProvider";
 import './globals.css'
 import { ToastProvider } from "@/context/ToastContext";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 // app/layout.tsx
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -11,7 +12,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ToastProvider>
           <RelayProvider>
             <AuthProvider>
-              {children}
+              <ErrorBoundary>
+                {children}
+              </ErrorBoundary>
             </AuthProvider>
           </RelayProvider>
         </ToastProvider>

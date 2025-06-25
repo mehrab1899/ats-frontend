@@ -16,7 +16,7 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
     return (
         <aside
             className={`${collapsed ? 'w-20' : 'w-72'
-                } bg-[#012C56] text-white flex flex-col h-screen fixed left-0 top-0 z-50 transition-all duration-300 ease-in-out`}
+                } bg-[var(--primary-color)] text-white flex flex-col h-screen fixed left-0 top-0 z-50 transition-all duration-300 ease-in-out`}
         >
             {/* Top Bar: Brand + Collapse/Expand Toggle */}
             <div className="flex items-center justify-between h-16 px-6 border-b border-blue-900">
@@ -25,7 +25,7 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
                         <span className="text-xl font-bold tracking-wide">Capventis</span>
                         <button
                             onClick={() => setCollapsed(true)}
-                            className="cursor-pointer w-8 h-8 rounded-full bg-[#E6EDF4] text-[#012C56] flex items-center justify-center hover:opacity-90 transition"
+                            className="cursor-pointer w-8 h-8 rounded-full bg-[#E6EDF4] text-[var(--primary-color)] flex items-center justify-center hover:opacity-90 transition"
                         >
                             <X className="w-5 h-5" />
                         </button>
@@ -33,7 +33,7 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
                 ) : (
                     <button
                         onClick={() => setCollapsed(false)}
-                        className="cursor-pointer w-8 h-8 rounded-full bg-[#E6EDF4] text-[#012C56] flex items-center justify-center hover:opacity-90 transition"
+                        className="cursor-pointer w-8 h-8 rounded-full bg-[#E6EDF4] text-[var(--primary-color)] flex items-center justify-center hover:opacity-90 transition"
                     >
                         <Menu className="w-5 h-5" />
                     </button>
@@ -46,7 +46,7 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
                     <Link
                         key={href}
                         href={href}
-                        className={`flex items-center gap-3 px-4 py-2 rounded-md hover:bg-[#E6EDF4] hover:text-[#012C56] transition ${pathname === href ? 'bg-[#E6EDF4] text-[#012C56] font-semibold' : ''
+                        className={`flex items-center gap-3 px-4 py-2 rounded-md hover:bg-[#E6EDF4] hover:text-[var(--primary-color)] transition ${pathname === href ? 'bg-[#E6EDF4] text-[var(--primary-color)] font-semibold' : ''
                             }`}
                     >
                         <Icon className="w-5 h-5" />
