@@ -1,6 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 import Cookies from 'js-cookie';
+import userEvent from '@testing-library/user-event';
 
 const TestComponent = () => {
     const { isAuthenticated, login, logout, loading } = useAuth();
@@ -39,7 +40,7 @@ describe('AuthContext', () => {
             </AuthProvider>
         );
 
-        screen.getByText('Login').click();
+        await userEvent.click(screen.getByText('Login'));
 
         await waitFor(() =>
             expect(screen.getByTestId('auth-status')).toHaveTextContent('true')
@@ -56,7 +57,7 @@ describe('AuthContext', () => {
             </AuthProvider>
         );
 
-        screen.getByText('Logout').click();
+        await userEvent.click(screen.getByText('Logout'));
 
         await waitFor(() =>
             expect(screen.getByTestId('auth-status')).toHaveTextContent('false')
