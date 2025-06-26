@@ -1,4 +1,7 @@
 import { Column } from '@/components/DataTable';
+import { FaArchive, FaEdit } from 'react-icons/fa';
+import Link from 'next/link';
+import ApplicantStageAction from '@/app/(admin)/applicant/ApplicantStageAction';
 
 export type Applicant = {
     id: string;
@@ -10,7 +13,15 @@ export type Applicant = {
 };
 
 export const applicantColumns: Column<Applicant>[] = [
-    { key: 'name', label: 'Name' },
+    {
+        key: 'name',
+        label: 'Name',
+        render: (val, row) => (
+            <Link href={`/applicant/${row.id}`} passHref>
+                <span className="text-blue-600 hover:underline">{val}</span>
+            </Link>
+        ),
+    },
     { key: 'email', label: 'Email' },
     { key: 'stage', label: 'Stage' },
     { key: 'position', label: 'Position' },
@@ -23,9 +34,8 @@ export const applicantColumns: Column<Applicant>[] = [
         key: 'id',
         label: 'Actions',
         render: (_val, row) => (
-            <div className="flex gap-2" >
-                <button className="text-blue-600 hover:underline"> Edit </button>
-                < button className="text-red-600 hover:underline" > Archive </button>
+            <div className="flex gap-2">
+                <ApplicantStageAction id={row.id} currentStage={row.stage} />
             </div>
         ),
     }

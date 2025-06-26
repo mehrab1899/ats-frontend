@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-relay';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { LoginMutation } from '@/graphql/mutations/LoginMutation';
+import { LoginMutation } from '@/modules/auth/LoginMutation';
 import type { LoginMutation as LoginMutationType } from '../../../__generated__/LoginMutation.graphql';
 import { AiOutlineLoading } from 'react-icons/ai';
 import Button from '@/components/Button';

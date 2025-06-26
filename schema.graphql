@@ -2,12 +2,25 @@ type AuthPayload {
   token: String!
 }
 
+type Query {
+  _: Boolean
+  publicJobs: [PublicJob!]!
+  jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): JobsResponse!
+  getJobById(id: ID!): Job!
+  applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
+  getApplicantById(id: ID!): Applicant!
+  dashboardStats: DashboardStats!
+  monthlyTrends: [MonthlyStats!]!
+}
+
 type Mutation {
   signup(email: String!, password: String!, firstName: String, lastName: String): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
-  createJob(input: JobInput!): Job!
-  updateJob(id: ID!, input: JobInput!): Job!
-  updateJobStatus(id: ID!, status: JobStatus!): Job!
+  createJob(input: JobInput!): AdminJob!
+  updateJob(id: ID!, input: JobInput!): AdminJob!
+  updateJobStatus(id: ID!, status: JobStatus!): AdminJob!
+  submitApplicationText(input: ApplicantTextInput!, cv: Upload!, coverLetter: Upload!): Applicant!
+  updateApplicantStage(id: ID!, stage: Stage!): Applicant!
 }
 
 """
@@ -21,25 +34,125 @@ enum JobStatus {
   DRAFT
 }
 
-type Job {
-  id: String!
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+}
+
+type PublicJob {
+  id: ID!
   title: String!
   description: String!
   status: JobStatus!
   skillsRequired: JSON!
   benefits: JSON!
   createdAt: String!
-  applicantCount: Int!
+  context: String
+}
+
+type AdminJob {
+  id: ID!
+  title: String!
+  description: String!
+  status: JobStatus!
+  type: JobType!
+  applicants: Int!
+  createdAt: String!
+  context: String
+}
+
+type Job {
+  id: ID!
+  title: String!
+  description: String!
+  status: JobStatus!
+  type: JobType!
+  skillsRequired: JSON!
+  benefits: JSON!
+  createdAt: String!
+  applicants: Int!
+  context: String
+}
+
+type JobsResponse {
+  jobs: [AdminJob!]!
+  totalJobsCount: Int!
 }
 
 input JobInput {
   title: String!
   description: String!
   status: JobStatus
+  type: JobType
   skillsRequired: JSON!
   benefits: JSON!
 }
 
-type Query {
-  jobs: [Job!]!
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+enum Stage {
+  APPLIED
+  SHORTLISTED
+  INTERVIEWED
+  HIRED
+  REJECTED
+}
+
+type ApplicantRow {
+  id: ID!
+  name: String!
+  email: String!
+  stage: Stage!
+  position: String!
+  appliedAt: String!
+}
+
+type ApplicantsResponse {
+  applicants: [ApplicantRow!]!
+  totalApplicantsCount: Int!
+}
+
+type JobRef {
+  id: ID!
+  title: String!
+}
+
+type Applicant {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  jobId: ID!
+  job: JobRef!
+  stage: Stage!
+  cv: String!
+  coverLetter: String!
+  message: String
+  appliedAt: String!
+}
+
+input ApplicantTextInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  jobId: ID!
+  message: String
+}
+
+type DashboardStats {
+  activeJobs: Int!
+  totalApplicants: Int!
+  topJob: String!
+  shortlistedCount: Int!
+}
+
+type MonthlyStats {
+  month: String!
+  jobs: Int!
+  applicants: Int!
+  hired: Int!
 }
