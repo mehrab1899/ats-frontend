@@ -3,7 +3,7 @@
 import React from 'react';
 
 export type Column<T> = {
-    key: keyof T | 'id'; // 'id' can be treated as special case if needed
+    key: keyof T ; // 'id' can be treated as special case if needed
     label: string;
     render?: (value: any, row: T) => React.ReactNode;
 };

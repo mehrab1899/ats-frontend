@@ -2,18 +2,9 @@ import JobStatusAction from '@/components/admin/job/JobStatusAction';
 import { Column } from '@/components/DataTable';
 import Link from 'next/link';
 import { FaEdit, FaArchive } from 'react-icons/fa';
+import type { jobQueries_AdminJobsQuery$data } from '@/__generated__/jobQueries_AdminJobsQuery.graphql';
 
-export type Job = {
-    id: string;
-    title: string;
-    description: string;
-    status: 'OPEN' | 'CLOSED' | 'DRAFT';
-    type: 'Full-time' | 'Part-time' | 'Contract';
-    applicants: number;
-    createdAt: string;
-};
-
-
+export type Job = jobQueries_AdminJobsQuery$data['jobs']['jobs'][number];
 
 export const jobColumns: Column<Job>[] = [
     {

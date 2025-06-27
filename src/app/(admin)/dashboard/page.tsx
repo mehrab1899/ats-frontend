@@ -6,14 +6,19 @@ import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
 import SearchField from '@/components/SearchField';
 import DataTable from '@/components/DataTable';
 import Pagination from '@/components/Pagination';
-import { jobColumns } from '@/utils/jobColumns';
-import { applicantColumns } from '@/utils/applicantColumns';
+import { Job, jobColumns } from '@/utils/jobColumns';
+import { Applicant, applicantColumns } from '@/utils/applicantColumns';
 import { useApplicants } from '@/modules/applicants/hooks/useApplicants';
 import { useAdminJobs } from '@/modules/jobs/hooks/useAdminJobs';
 
 const TABS = ['Jobs', 'Applicants'];
-const JOB_FILTERS = ['ALL', 'OPEN', 'DRAFT', 'CLOSED'];
-const APPLICANT_FILTERS = ['APPLIED', 'SHORTLISTED', 'INTERVIEWED', 'HIRED', 'REJECTED'];
+type JobFilter = 'ALL' | 'OPEN' | 'DRAFT' | 'CLOSED';
+type ApplicantFilter = 'APPLIED' | 'SHORTLISTED' | 'INTERVIEWED' | 'HIRED' | 'REJECTED';
+type FilterType = JobFilter | ApplicantFilter;
+
+const JOB_FILTERS: JobFilter[] = ['ALL', 'OPEN', 'DRAFT', 'CLOSED'];
+const APPLICANT_FILTERS: ApplicantFilter[] = ['APPLIED', 'SHORTLISTED', 'INTERVIEWED', 'HIRED', 'REJECTED'];
+
 
 export default function DashboardPage() {
     const [selectedTab, setSelectedTab] = useState<string>(TABS[0]);
@@ -53,6 +58,14 @@ export default function DashboardPage() {
     const activeFilters = selectedTab === 'Jobs' ? JOB_FILTERS : APPLICANT_FILTERS;
     const selectedFilter = selectedTab === 'Jobs' ? jobFilter : applicantFilter;
     const setSelectedFilter = selectedTab === 'Jobs' ? setJobFilter : setApplicantFilter;
+
+    const handleFilterClick = (filter: string) => {
+        if (selectedTab === 'Jobs') {
+            setJobFilter(filter as JobFilter);
+        } else {
+            setApplicantFilter(filter as ApplicantFilter);
+        }
+    };
 
     return (
         <div className="space-y-10">
@@ -98,7 +111,7 @@ export default function DashboardPage() {
                     {activeFilters.map((filter) => (
                         <button
                             key={filter}
-                            onClick={() => setSelectedFilter(filter)}
+                            onClick={() => handleFilterClick(filter)}
                             className={`px-3 py-1 rounded-full text-sm font-medium transition border ${selectedFilter === filter
                                 ? 'bg-[var(--primary-color)] text-white border-[var(--primary-color)]'
                                 : 'bg-gray-100 text-gray-800 hover:bg-gray-200 border-gray-300'
@@ -107,15 +120,25 @@ export default function DashboardPage() {
                             {filter === 'ALL' ? 'All' : filter.charAt(0) + filter.slice(1).toLowerCase()}
                         </button>
                     ))}
+
                 </div>
 
                 {/* Row 3: Table */}
                 <div className="pt-2">
-                    <DataTable
-                        columns={selectedTab === 'Jobs' ? jobColumns : applicantColumns}
-                        data={selectedTab === 'Jobs' ? adminJobs.jobs : applicants.applicants}
-                        className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[var(--primary-color)]"
-                    />
+                    {selectedTab === 'Jobs' ? (
+                        <DataTable<Job>
+                            columns={jobColumns}
+                            data={[...adminJobs.jobs]} // force to mutable array
+                            className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[var(--primary-color)]"
+                        />
+                    ) : (
+                        <DataTable<Applicant>
+                            columns={applicantColumns}
+                            data={[...applicants.applicants]} // force to mutable array
+                            className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[var(--primary-color)]"
+                        />
+                    )}
+
                 </div>
 
                 {/* Pagination Row */}

@@ -7,7 +7,7 @@ import { usePublicJobs } from "@/modules/jobs/hooks/usePublicJobs";
 
 export default function ApplyPage() {
     const params = useParams();
-    const jobId = params?.id;
+    const jobId = params?.id as string;
     const { publicJobs } = usePublicJobs();
 
     const selectedJob = publicJobs.find((job: any) => job.id === jobId);

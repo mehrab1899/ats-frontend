@@ -8,7 +8,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true}>
+      <body className="bg-white" suppressHydrationWarning={true}>
         <ToastProvider>
           <RelayProvider>
             <AuthProvider>

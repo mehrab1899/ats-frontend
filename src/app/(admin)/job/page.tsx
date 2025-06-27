@@ -10,20 +10,28 @@ import { JobTypeEnumMap } from '@/utils/jobEnums';
 import { useCreateJob } from '@/modules/jobs/hooks/useCreateJob';
 import { BenefitsOptions, SkillsOptions } from '@/utils/jobOptions';
 import MultiSelectInput from '@/components/MultiSelectInput';
+import { JobStatus } from '@/__generated__/jobMutations_UpdateJobMutation.graphql';
 
 const JobCreateForm = () => {
     const router = useRouter();
     const { addToast } = useToast();
     const [commit, isInFlight] = useCreateJob();
 
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<{
+        title: string;
+        description: string;
+        status: JobStatus;
+        type: string;
+        skillsRequired: string[];
+        benefits: string[];
+      }>({
         title: '',
         description: '',
         status: 'OPEN',
         type: 'Full-time',
-        skillsRequired: [] as string[],
-        benefits: [] as string[]
-    });
+        skillsRequired: [],
+        benefits: [],
+      });      
 
     const [errors, setErrors] = useState<{ [K in keyof typeof form]?: string }>({});
 

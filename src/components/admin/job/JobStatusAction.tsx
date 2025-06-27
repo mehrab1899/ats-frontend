@@ -3,12 +3,13 @@
 import { useToast } from '@/context/ToastContext';
 import StatusDropdown from '@/components/StatusDropdown';
 import { useUpdateJobStatus } from '@/modules/jobs/hooks/useUpdateJobStatus';
+import { JobStatus } from '@/__generated__/jobMutations_CreateJobMutation.graphql';
 
 type Job = {
     status: 'OPEN' | 'CLOSED' | 'DRAFT';
 };
 
-const JobStatusAction: React.FC<{ id: string; currentStatus: Job['status'] }> = ({ id, currentStatus }) => {
+const JobStatusAction: React.FC<{ id: string; currentStatus: JobStatus }> = ({ id, currentStatus }) => {
     const [commit, isInFlight] = useUpdateJobStatus();
     const { addToast } = useToast();
 
@@ -28,7 +29,7 @@ const JobStatusAction: React.FC<{ id: string; currentStatus: Job['status'] }> = 
     };
 
     return (
-        <StatusDropdown
+        <StatusDropdown<JobStatus>
             options={['OPEN', 'CLOSED', 'DRAFT']}
             currentValue={currentStatus}
             onChange={handleChange}

@@ -27,7 +27,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <div className="flex min-h-screen bg-background text-foreground">
+        <div className="flex min-h-screen bg-white">
             <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} />
 
             <div

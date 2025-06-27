@@ -2,15 +2,10 @@ import { Column } from '@/components/DataTable';
 import { FaArchive, FaEdit } from 'react-icons/fa';
 import Link from 'next/link';
 import ApplicantStageAction from '@/app/(admin)/applicant/ApplicantStageAction';
+import type { applicantsQuery_ApplicantsQuery$data } from '@/__generated__/applicantsQuery_ApplicantsQuery.graphql';
 
-export type Applicant = {
-    id: string;
-    name: string;
-    email: string;
-    stage: 'APPLIED' | 'SHORTLISTED' | 'INTERVIEWED' | 'HIRED' | 'REJECTED';
-    position: string;
-    appliedAt: string;
-};
+export type Applicant = applicantsQuery_ApplicantsQuery$data['applicants']['applicants'][number];
+
 
 export const applicantColumns: Column<Applicant>[] = [
     {

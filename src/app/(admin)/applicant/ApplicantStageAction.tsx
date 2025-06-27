@@ -3,10 +3,10 @@
 import { useToast } from '@/context/ToastContext';
 import StatusDropdown from '@/components/StatusDropdown';
 import { useUpdateApplicantStage } from '@/modules/applicants/hooks/useUpdateApplicantStage';
-
+import { Stage } from '@/__generated__/applicantMutations_UpdateApplicantStageMutation.graphql';
 type Props = {
     id: string;
-    currentStage: 'APPLIED' | 'SHORTLISTED' | 'INTERVIEWED' | 'HIRED' | 'REJECTED';
+    currentStage: Stage;
 };
 
 const stageOptions = ['APPLIED', 'SHORTLISTED', 'INTERVIEWED', 'HIRED', 'REJECTED'];
@@ -30,7 +30,7 @@ const ApplicantStageAction = ({ id, currentStage }: Props) => {
 
     return (
         <StatusDropdown
-            options={stageOptions}
+            options={stageOptions as ("APPLIED" | "HIRED" | "INTERVIEWED" | "REJECTED" | "SHORTLISTED")[]}
             currentValue={currentStage}
             onChange={handleChange}
             loading={isInFlight}
