@@ -13,7 +13,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <head>
                 <title>Capventis ATS</title>
             </head>
-            <body suppressHydrationWarning={true}>
+            <body >
                 <Header bannerText={bannerText} />
                 <main className="flex-grow">{children}</main>
                 <Footer />
