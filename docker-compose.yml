@@ -1,12 +1,13 @@
-version: "3.9"
-
+version: '3.8'
 services:
-  ats-frontend:
+  frontend:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ats-frontend
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
+    volumes:
+      - .:/app
+      - /app/node_modules
