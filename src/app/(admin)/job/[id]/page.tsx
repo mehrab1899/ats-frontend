@@ -189,7 +189,6 @@ const JobDetailForm = () => {
                         label="Skills Required"
                         values={form.skillsRequired}
                         options={SkillsOptions}
-                        multiple={true}
                         disabled={isViewMode}
                         onChange={(vals) => setForm(prev => ({ ...prev, skillsRequired: vals as string[] }))}
                     />
@@ -199,7 +198,6 @@ const JobDetailForm = () => {
                         label="Benefits"
                         values={form.benefits}
                         options={BenefitsOptions}
-                        multiple={true}
                         disabled={isViewMode}
                         onChange={(vals) => setForm(prev => ({ ...prev, benefits: vals as string[] }))}
                     />
