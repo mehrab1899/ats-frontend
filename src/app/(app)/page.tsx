@@ -3,6 +3,7 @@
 import React from 'react';
 import JobCard from '../../components/JobCard';
 import { usePublicJobs } from '@/modules/jobs/hooks/usePublicJobs';
+import { Carousel } from '@/components/Carousel';
 
 const cultureData = [
     {
@@ -47,15 +48,20 @@ export default function Home() {
             <section id="positions" className="max-w-6xl mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">Open Positions</h2>
 
-                <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                    {publicJobs?.length === 0 ? (
-                        <p className="col-span-full text-gray-500">No open positions available right now.</p>
-                    ) : (
-                        publicJobs.map((job) => (
-                            <JobCard id={job.id} key={job.id} title={job.title} description={job.description} />
-                        ))
-                    )}
-                </div>
+                {publicJobs?.length === 0 ? (
+                    <p className="text-center text-gray-500">No open positions available right now.</p>
+                ) : (
+                    <Carousel>
+                        {publicJobs.map((job) => (
+                            <JobCard
+                                id={job.id}
+                                key={job.id}
+                                title={job.title}
+                                description={job.description}
+                            />
+                        ))}
+                    </Carousel>
+                )}
             </section>
 
             {/* Why Us / Culture Section */}
