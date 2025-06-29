@@ -1,10 +1,12 @@
-'use client';
-
-import React, { useState } from 'react';
+'use client'
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaBars, FaTimes } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+
+const FaBars = dynamic(() => import('react-icons/fa').then(mod => mod.FaBars));
+const FaTimes = dynamic(() => import('react-icons/fa').then(mod => mod.FaTimes));
 
 interface HeaderProps {
   bannerText: string;

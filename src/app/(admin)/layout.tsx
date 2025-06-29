@@ -7,7 +7,7 @@ import Sidebar from '@/components/admin/Sidebar';
 import Navbar from '@/components/admin/Navbar';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-    const { isAuthenticated, loading } = useAuth(); // ✅ include `loading`
+    const { isAuthenticated, loading } = useAuth(); 
     const router = useRouter();
 
     const [collapsed, setCollapsed] = useState(false);

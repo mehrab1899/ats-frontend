@@ -22,7 +22,9 @@ export default function Sidebar({ collapsed, setCollapsed }: SidebarProps) {
             <div className="flex items-center justify-between h-16 px-6 border-b border-blue-900">
                 {!collapsed ? (
                     <>
-                        <span className="text-xl font-bold tracking-wide">Capventis</span>
+                        <Link className="text-xl font-bold tracking-wide" href="/">
+                            Capventis
+                        </Link>
                         <button
                             onClick={() => setCollapsed(true)}
                             className="cursor-pointer w-8 h-8 rounded-full bg-[#E6EDF4] text-[var(--primary-color)] flex items-center justify-center hover:opacity-90 transition"
