@@ -19,15 +19,9 @@ export default function ApplyPage() {
         );
     }
 
-    let parsedSkills: string[] = [];
-    let parsedBenefits: string[] = [];
+    const skills = job.skillsRequired ?? [];
+    const benefits = job.benefits ?? [];
 
-    try {
-        parsedSkills = JSON.parse(job.skillsRequired || "[]");
-        parsedBenefits = JSON.parse(job.benefits || "[]");
-    } catch (error) {
-        console.error("Error parsing skills or benefits", error);
-    }
 
     return (
         <div className="max-w-4xl mx-auto py-10 px-4">
@@ -49,7 +43,7 @@ export default function ApplyPage() {
                 <div>
                     <h2 className="text-xl font-semibold text-gray-800">Skills Required</h2>
                     <ul className="list-disc list-inside text-gray-600">
-                        {parsedSkills.map((skill, idx) => (
+                        {skills.map((skill: any, idx: any) => (
                             <li key={idx}>{skill}</li>
                         ))}
                     </ul>
@@ -58,7 +52,7 @@ export default function ApplyPage() {
                 <div>
                     <h2 className="text-xl font-semibold text-gray-800">Benefits</h2>
                     <ul className="list-disc list-inside text-gray-600">
-                        {parsedBenefits.map((benefit, idx) => (
+                        {benefits.map((benefit: any, idx: any) => (
                             <li key={idx}>{benefit}</li>
                         ))}
                     </ul>

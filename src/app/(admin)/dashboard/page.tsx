@@ -1,15 +1,25 @@
 'use client';
 
 import React, { useMemo, useState, useEffect } from 'react';
-import StatCardsGrid from '@/components/admin/dashboard/StatCardsGrid';
-import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
+import dynamic from 'next/dynamic';
 import SearchField from '@/components/SearchField';
-import DataTable from '@/components/DataTable';
 import Pagination from '@/components/Pagination';
 import { Job, jobColumns } from '@/utils/jobColumns';
+import DataTable from '@/components/DataTable';
 import { Applicant, applicantColumns } from '@/utils/applicantColumns';
 import { useApplicants } from '@/modules/applicants/hooks/useApplicants';
 import { useAdminJobs } from '@/modules/jobs/hooks/useAdminJobs';
+
+const StatCardsGrid = dynamic(() => import('@/components/admin/dashboard/StatCardsGrid'), {
+    loading: () => <div className="text-center py-4">Loading cards...</div>,
+    ssr: false
+});
+
+const JobTrendChart = dynamic(() => import('@/components/admin/dashboard/JobTrendChart'), {
+    loading: () => <div className="text-center py-4">Loading chart...</div>,
+    ssr: false
+});
+
 
 const TABS = ['Jobs', 'Applicants'];
 type JobFilter = 'ALL' | 'OPEN' | 'DRAFT' | 'CLOSED';
