@@ -1,14 +1,30 @@
-import { renderHook, act, waitFor } from '@testing-library/react';
+import {
+    renderHook,
+    act,
+    waitFor,
+    render,
+    screen,
+    fireEvent,
+} from '@testing-library/react';
 import { RelayEnvironmentProvider } from 'react-relay';
 import { createMockEnvironment, MockPayloadGenerator } from 'relay-test-utils';
 
 import { useApplicants } from '@/modules/applicants/hooks/useApplicants';
 import { useApplicantById } from '@/modules/applicants/hooks/useApplicantById';
 import { useUpdateApplicantStage } from '@/modules/applicants/hooks/useUpdateApplicantStage';
+import ApplicantDetail from '@/app/(admin)/applicant/[id]/page';
+import ApplicantStageAction from '@/app/(admin)/applicant/ApplicantStageAction';
+import { ToastProvider } from '@/context/ToastContext';
+import { useParams } from 'next/navigation';
 
 const wrapperWithEnv = (env: any) => ({ children }: any) => (
     <RelayEnvironmentProvider environment={env}>{children}</RelayEnvironmentProvider>
 );
+
+jest.mock('next/navigation', () => ({
+    ...jest.requireActual('next/navigation'),
+    useParams: jest.fn(),
+}));
 
 describe('Applicant Hooks', () => {
     it('useApplicants fetches paginated applicants', async () => {
@@ -104,3 +120,110 @@ describe('Applicant Hooks', () => {
         });
     });
 });
+
+
+
+describe('Applicant UI Components', () => {
+    const env = createMockEnvironment();
+
+    describe('ApplicantDetail', () => {
+        beforeEach(() => {
+            (useParams as jest.Mock).mockReturnValue({ id: 'app-123' });
+        });
+      
+        it('renders applicant full name and info blocks', async () => {
+            env.mock.queueOperationResolver(op =>
+                MockPayloadGenerator.generate(op, {
+                    Query: () => ({
+                        getApplicantById: {
+                            id: 'app-123',
+                            firstName: 'John',
+                            lastName: 'Doe',
+                            email: 'john.doe@example.com',
+                            phone: '1234567890',
+                            stage: 'HIRED',
+                            job: { title: 'Software Engineer' },
+                            cv: 'http://cv-link',
+                            coverLetter: 'http://cover-letter-link',
+                            message: 'Thanks for considering.',
+                            appliedAt: '2024-01-01T00:00:00Z',
+                        },
+                    }),
+                })
+            );
+
+            render(
+                <RelayEnvironmentProvider environment={env}>
+                    <ApplicantDetail />
+                </RelayEnvironmentProvider>
+            );
+
+            expect(await screen.findByText('John Doe')).toBeInTheDocument();
+            expect(await screen.findByText('john.doe@example.com')).toBeInTheDocument();
+        });
+
+        it('shows correct badge color for HIRED', async () => {
+            env.mock.queueOperationResolver(op =>
+                MockPayloadGenerator.generate(op, {
+                    Query: () => ({
+                        getApplicantById: {
+                            id: 'app-123',
+                            firstName: 'John',
+                            lastName: 'Doe',
+                            email: '',
+                            phone: '',
+                            stage: 'HIRED',
+                            job: { title: '' },
+                            cv: '',
+                            coverLetter: '',
+                            message: '',
+                            appliedAt: '2024-01-01T00:00:00Z',
+                        },
+                    }),
+                })
+            );
+
+            render(
+                <RelayEnvironmentProvider environment={env}>
+                    <ApplicantDetail />
+                </RelayEnvironmentProvider>
+            );
+
+            const badge = await screen.findByText('HIRED');
+            expect(badge).toHaveClass('bg-green-100', 'text-green-800');
+        });
+
+        it('renders CV and Cover Letter links correctly', async () => {
+            env.mock.queueOperationResolver(op =>
+                MockPayloadGenerator.generate(op, {
+                    Query: () => ({
+                        getApplicantById: {
+                            id: 'app-123',
+                            firstName: '',
+                            lastName: '',
+                            email: '',
+                            phone: '',
+                            stage: 'APPLIED',
+                            job: { title: '' },
+                            cv: 'http://cv-link',
+                            coverLetter: 'http://cover-letter-link',
+                            message: '',
+                            appliedAt: '2024-01-01T00:00:00Z',
+                        },
+                    }),
+                })
+            );
+
+            render(
+                <RelayEnvironmentProvider environment={env}>
+                    <ApplicantDetail />
+                </RelayEnvironmentProvider>
+            );
+
+            expect(await screen.findByText('View CV')).toHaveAttribute('href', 'http://cv-link');
+            expect(await screen.findByText('View Cover Letter')).toHaveAttribute('href', 'http://cover-letter-link');
+        });
+    });
+});
+
+
