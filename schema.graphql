@@ -20,7 +20,7 @@ type Mutation {
   updateJob(id: ID!, input: JobInput!): AdminJob!
   updateJobStatus(id: ID!, status: JobStatus!): AdminJob!
   submitApplicationText(input: ApplicantTextInput!, cv: Upload!, coverLetter: Upload!): Applicant!
-  updateApplicantStage(id: ID!, stage: Stage!): Applicant!
+  updateApplicantStage(id: ID!, stage: Stage!): ApplicantRow!
 }
 
 """
