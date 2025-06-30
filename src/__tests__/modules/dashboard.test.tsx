@@ -1,10 +1,28 @@
-// src/__tests__/modules/analytics.test.tsx
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor, render, screen } from '@testing-library/react';
 import { RelayEnvironmentProvider } from 'react-relay';
 import { createMockEnvironment, MockPayloadGenerator } from 'relay-test-utils';
 
 import { useDashboardStats } from '@/modules/dashboard/hooks/useDashboardStats';
 import { useMonthlyTrends } from '@/modules/dashboard/hooks/useMonthlyTrends';
+import StatCardsGrid from '@/components/admin/dashboard/StatCardsGrid';
+import JobTrendChart from '@/components/admin/dashboard/JobTrendChart';
+
+global.ResizeObserver = class {
+    observe() { }
+    unobserve() { }
+    disconnect() { }
+};
+
+Object.defineProperties(HTMLElement.prototype, {
+    offsetHeight: {
+        configurable: true,
+        value: 300,
+    },
+    offsetWidth: {
+        configurable: true,
+        value: 600,
+    },
+});
 
 const wrapperWithEnv = (env: any) => ({ children }: any) => (
     <RelayEnvironmentProvider environment={env}>{children}</RelayEnvironmentProvider>
@@ -69,4 +87,62 @@ describe('Analytics Hooks', () => {
             expect(result.current[0].hired).toBe(5);
         });
     });
+});
+
+describe('Dashboard Components', () => {
+    it('StatCardsGrid renders stat cards with correct values', async () => {
+        const env = createMockEnvironment();
+
+        render(
+            <RelayEnvironmentProvider environment={env}>
+                <StatCardsGrid />
+            </RelayEnvironmentProvider>
+        );
+
+        env.mock.resolveMostRecentOperation(op =>
+            MockPayloadGenerator.generate(op, {
+                Query: () => ({
+                    dashboardStats: {
+                        activeJobs: 7,
+                        totalApplicants: 250,
+                        topJob: 'Backend Developer',
+                        shortlistedCount: 30,
+                    },
+                }),
+            })
+        );
+
+        expect(await screen.findByText('250')).toBeInTheDocument();
+        expect(await screen.findByText('Backend Developer')).toBeInTheDocument();
+    });
+
+    it('JobTrendChart receives the correct data', async () => {
+        const env = createMockEnvironment();
+
+        const spy = jest.spyOn(console, 'error').mockImplementation(() => { }); // Silence Recharts errors
+
+        const { unmount } = render(
+            <RelayEnvironmentProvider environment={env}>
+                <JobTrendChart />
+            </RelayEnvironmentProvider>
+        );
+
+        env.mock.resolveMostRecentOperation(op =>
+            MockPayloadGenerator.generate(op, {
+                Query: () => ({
+                    monthlyTrends: [
+                        { month: 'March', jobs: 10, applicants: 90, hired: 4 },
+                        { month: 'April', jobs: 8, applicants: 70, hired: 6 },
+                    ],
+                }),
+            })
+        );
+
+        expect(await screen.findByText('Monthly Job Postings')).toBeInTheDocument();
+
+        unmount();
+        spy.mockRestore();
+    });
+
+
 });
