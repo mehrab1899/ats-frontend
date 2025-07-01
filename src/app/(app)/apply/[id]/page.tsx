@@ -19,9 +19,8 @@ export default function ApplyPage() {
         );
     }
 
-    const skills = job.skillsRequired ?? [];
-    const benefits = job.benefits ?? [];
-
+    const skills = typeof job.skillsRequired === 'string' ? JSON.parse(job.skillsRequired) : job.skillsRequired;
+    const benefits = typeof job.benefits === 'string' ? JSON.parse(job.benefits) : job.benefits;
 
     return (
         <div className="max-w-4xl mx-auto py-10 px-4">
