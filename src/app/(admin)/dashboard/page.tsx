@@ -6,7 +6,7 @@ import SearchField from '@/components/SearchField';
 import Pagination from '@/components/Pagination';
 import { Job, jobColumns } from '@/utils/jobColumns';
 import DataTable from '@/components/DataTable';
-import { Applicant, applicantColumns } from '@/utils/applicantColumns';
+import { applicantColumns } from '@/utils/applicantColumns';
 import { useApplicants } from '@/modules/applicants/hooks/useApplicants';
 import { useAdminJobs } from '@/modules/jobs/hooks/useAdminJobs';
 
@@ -53,7 +53,10 @@ export default function DashboardPage() {
     }, [selectedTab, applicantFilter]);
 
     // 🔹 Fetch data
-    const { applicants } = useApplicants(memoizedSearchTerm, stageFilter, (currentPage - 1) * pageSize, pageSize);
+    // const { applicants } = useApplicants(memoizedSearchTerm, stageFilter, (currentPage - 1) * pageSize, pageSize);
+
+    const { applicants, loadNext, hasNext, isLoadingNext } = useApplicants(memoizedSearchTerm, stageFilter);
+    console.log('applicants', applicants)
     const { adminJobs } = useAdminJobs(memoizedSearchTerm, statusFilter, (currentPage - 1) * pageSize, pageSize);
 
     const totalPagesApplicants = Math.ceil(applicants.totalApplicantsCount / pageSize);
@@ -138,13 +141,13 @@ export default function DashboardPage() {
                     {selectedTab === 'Jobs' ? (
                         <DataTable<Job>
                             columns={jobColumns}
-                            data={[...adminJobs.jobs]} // force to mutable array
+                            data={[...adminJobs.jobs]}
                             className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[var(--primary-color)]"
                         />
                     ) : (
-                        <DataTable<Applicant>
+                        <DataTable<typeof applicants[0]>
                             columns={applicantColumns}
-                            data={[...applicants.applicants]} // force to mutable array
+                            data={applicants}
                             className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[var(--primary-color)]"
                         />
                     )}

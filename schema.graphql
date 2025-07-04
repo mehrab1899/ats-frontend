@@ -7,7 +7,7 @@ type Query {
   publicJobs: [PublicJob!]!
   jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): JobsResponse!
   getJobById(id: ID!): Job!
-  applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
+  applicants(search: String, stage: Stage, first: Int, after: String): ApplicantConnection!
   getApplicantById(id: ID!): Applicant!
   dashboardStats: DashboardStats!
   monthlyTrends: [MonthlyStats!]!
@@ -100,23 +100,36 @@ enum Stage {
   REJECTED
 }
 
-type ApplicantRow {
-  id: ID!
-  name: String!
-  email: String!
-  stage: Stage!
-  position: String!
-  appliedAt: String!
-}
-
-type ApplicantsResponse {
-  applicants: [ApplicantRow!]!
-  totalApplicantsCount: Int!
-}
-
 type JobRef {
   id: ID!
   title: String!
+}
+
+type ApplicantRow {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  stage: Stage!
+  appliedAt: String!
+  job: JobRef!
+}
+
+type ApplicantEdge {
+  node: ApplicantRow!
+  cursor: String!
+}
+
+type ApplicantConnection {
+  edges: [ApplicantEdge!]!
+  pageInfo: PageInfo!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
 }
 
 type Applicant {

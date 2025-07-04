@@ -3,6 +3,9 @@
 import React from 'react';
 import { useParams } from 'next/navigation';
 import { useApplicantById } from '@/modules/applicants/hooks/useApplicantById';
+import { useFragment } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { ApplicantDetailFragment } from '@/modules/applicants/fragments/ApplicantDetail.fragment';
 
 const badgeColors: Record<string, string> = {
     APPLIED: 'bg-blue-100 text-blue-800',
@@ -14,7 +17,9 @@ const badgeColors: Record<string, string> = {
 
 const ApplicantDetail = () => {
     const { id } = useParams();
-    const applicant = useApplicantById(id as string);
+    const applicantRef = useApplicantById(id as string);
+    const applicant = useFragment(ApplicantDetailFragment, applicantRef);
+    console.log('applicant by id', applicant)
 
     return (
         <div className="max-w-4xl mx-auto mt-10 px-6">

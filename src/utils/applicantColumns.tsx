@@ -1,37 +1,63 @@
-import { Column } from '@/components/DataTable';
-import { FaArchive, FaEdit } from 'react-icons/fa';
-import Link from 'next/link';
-import ApplicantStageAction from '@/app/(admin)/applicant/ApplicantStageAction';
-import type { applicantsQuery_ApplicantsQuery$data } from '@/__generated__/applicantsQuery_ApplicantsQuery.graphql';
+import { ApplicantRow_applicant$key } from "@/__generated__/ApplicantRow_applicant.graphql";
+import ApplicantStageAction from "@/app/(admin)/applicant/ApplicantStageAction";
+import { Column } from "@/components/DataTable";
+import Link from "next/link";
+import { useFragment } from "react-relay/hooks";
+import { ApplicantRowFragment } from "@/modules/applicants/fragments/ApplicantRow.fragment"; // ✅ imported
 
-export type Applicant = applicantsQuery_ApplicantsQuery$data['applicants']['applicants'][number];
-
-
-export const applicantColumns: Column<Applicant>[] = [
+export const applicantColumns: Column<ApplicantRow_applicant$key>[] = [
     {
         key: 'name',
         label: 'Name',
-        render: (val, row) => (
-            <Link href={`/applicant/${row.id}`} passHref>
-                <span className="text-blue-600 hover:underline">{val}</span>
-            </Link>
-        ),
+        render: (_val, row) => {
+            const data = useFragment(ApplicantRowFragment, row);
+            return (
+                <Link href={`/applicant/${data.id}`} passHref>
+                    <span className="text-blue-600 hover:underline">
+                        {data.firstName} {data.lastName}
+                    </span>
+                </Link>
+            );
+        },
     },
-    { key: 'email', label: 'Email' },
-    { key: 'stage', label: 'Stage' },
-    { key: 'position', label: 'Position' },
+    {
+        key: 'email',
+        label: 'Email',
+        render: (_val, row) => {
+            const data = useFragment(ApplicantRowFragment, row);
+            return data.email;
+        },
+    },
+    {
+        key: 'stage',
+        label: 'Stage',
+        render: (_val, row) => {
+            const data = useFragment(ApplicantRowFragment, row);
+            return data.stage;
+        },
+    },
+    {
+        key: 'position',
+        label: 'Position',
+        render: (_val, row) => {
+            const data = useFragment(ApplicantRowFragment, row);
+            return data.job.title;
+        },
+    },
     {
         key: 'appliedAt',
         label: 'Applied At',
-        render: (val) => new Date(val).toLocaleDateString(),
+        render: (_val, row) => {
+            const data = useFragment(ApplicantRowFragment, row);
+            return new Date(data.appliedAt).toLocaleDateString();
+        },
     },
     {
         key: 'id',
         label: 'Actions',
-        render: (_val, row) => (
-            <div className="flex gap-2">
-                <ApplicantStageAction id={row.id} currentStage={row.stage} />
-            </div>
-        ),
-    }
+        render: (_val, row) => {
+            const data = useFragment(ApplicantRowFragment, row);
+            return <ApplicantStageAction id={data.id} currentStage={data.stage} />;
+        },
+    },
 ];

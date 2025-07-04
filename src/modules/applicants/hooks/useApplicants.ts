@@ -1,22 +1,34 @@
-import { useLazyLoadQuery } from 'react-relay';
+import { graphql, useLazyLoadQuery, usePaginationFragment } from 'react-relay/hooks';
 import { useMemo } from 'react';
-import { ApplicantsQuery } from '../graphql/applicantsQuery';
-import { applicantsQuery_ApplicantsQuery } from '@/__generated__/applicantsQuery_ApplicantsQuery.graphql';
+import { ApplicantsConnection_viewer$key } from '@/__generated__/ApplicantsConnection_viewer.graphql';
+import { useApplicantsFragmentPaginationQuery } from '@/__generated__/useApplicantsFragmentPaginationQuery.graphql';
+import { ApplicantsPaginationFragment } from '../fragments/ApplicantsConnection.fragment';
 
-export const useApplicants = (search?: string, stage?: string, skip: number = 0, take: number = 10) => {
-    // Memoize the query variables to avoid excessive re-fetches
-    const queryVariables = useMemo(() => ({
-        search,
-        stage,
-        skip,
-        take,
-    }), [search, stage, skip, take]);  // Update only when the relevant params change
+export const useApplicants = (search: string, stage: string | null) => {
+    const queryData = useLazyLoadQuery<useApplicantsFragmentPaginationQuery>(
+        graphql`
+      query useApplicantsFragmentPaginationQuery($search: String, $stage: Stage) {
+        ...ApplicantsConnection_viewer @arguments(search: $search, stage: $stage)
+      }
+    `,
+        { search, stage }
+    );
 
-    const data = useLazyLoadQuery<applicantsQuery_ApplicantsQuery>(ApplicantsQuery, queryVariables, {
-        fetchPolicy: 'store-or-network',
-    });
+    const {
+        data,
+        loadNext,
+        hasNext,
+        isLoadingNext,
+        refetch,
+    } = usePaginationFragment(ApplicantsPaginationFragment, queryData);
+
+    const applicants = useMemo(() => data.applicants.edges.map(e => e.node), [data]);
 
     return {
-        applicants: data.applicants,
+        applicants,
+        loadNext,
+        hasNext,
+        isLoadingNext,
+        refetch,
     };
 };

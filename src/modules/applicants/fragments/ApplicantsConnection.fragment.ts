@@ -1,7 +1,14 @@
 import { graphql } from 'react-relay';
 
-export const ApplicantsQuery = graphql`
-  query applicantsQuery_ApplicantsQuery($search: String, $stage: Stage, $first: Int, $after: String) {
+export const ApplicantsPaginationFragment = graphql`
+  fragment ApplicantsConnection_viewer on Query
+  @argumentDefinitions(
+    first: { type: "Int", defaultValue: 10 }
+    after: { type: "String" }
+    search: { type: "String" }
+    stage: { type: "Stage" }
+  )
+  @refetchable(queryName: "ApplicantsConnectionPaginationQuery") {
     applicants(search: $search, stage: $stage, first: $first, after: $after)
       @connection(key: "ApplicantsConnection_applicants") {
       edges {
@@ -14,15 +21,6 @@ export const ApplicantsQuery = graphql`
         hasNextPage
         endCursor
       }
-    }
-  }
-`;
-
-
-export const GetApplicantByIdQuery = graphql`
-  query applicantsQuery_GetApplicantByIdQuery($id: ID!) {
-    getApplicantById(id: $id) {
-      ...ApplicantDetail_applicant
     }
   }
 `;

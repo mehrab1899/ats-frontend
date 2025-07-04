@@ -1,4 +1,3 @@
-// src/lib/relayEnvironment.ts
 import {
   Environment,
   Network,
@@ -82,5 +81,5 @@ async function fetchQuery(params: RequestParameters, variables: Variables) {
 
 export default new Environment({
   network: Network.create(fetchQuery),
-  store: new Store(new RecordSource()),
+store: new Store(new RecordSource()),
 });
