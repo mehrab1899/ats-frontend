@@ -1,7 +1,8 @@
-import { useMutation } from 'react-relay';
+// useUpdateApplicantStage.ts
+import { useMutation } from 'react-relay/hooks';
+import { applicantMutations_UpdateApplicantStageMutation } from '@/__generated__/applicantMutations_UpdateApplicantStageMutation.graphql';
 import { UpdateApplicantStageMutation } from '../graphql/applicantMutations';
-import { applicantMutations_UpdateApplicantStageMutation as MutationType } from '@/__generated__/applicantMutations_UpdateApplicantStageMutation.graphql';
 
-export const useUpdateApplicantStage = () => {
-    return useMutation<MutationType>(UpdateApplicantStageMutation);
-};
+export function useUpdateApplicantStage() {
+    return useMutation<applicantMutations_UpdateApplicantStageMutation>(UpdateApplicantStageMutation);
+}
