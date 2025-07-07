@@ -1,37 +1,38 @@
+// src/utils/applicantColumns.ts
 import { Column } from '@/components/DataTable';
-import { FaArchive, FaEdit } from 'react-icons/fa';
-import Link from 'next/link';
-import ApplicantStageAction from '@/app/(admin)/applicant/ApplicantStageAction';
-import type { applicantsQuery_ApplicantsQuery$data } from '@/__generated__/applicantsQuery_ApplicantsQuery.graphql';
+import { ApplicantCell } from '@/components/admin/applicant/ApplicantCell';
+import { ApplicantActionsCell } from '@/components/admin/applicant/ApplicantActionsCell';
+import { ApplicantRow_applicant$key } from '@/__generated__/ApplicantRow_applicant.graphql';
 
-export type Applicant = applicantsQuery_ApplicantsQuery$data['applicants']['applicants'][number];
-
-
-export const applicantColumns: Column<Applicant>[] = [
+export const applicantColumns: Column<ApplicantRow_applicant$key>[] = [
     {
         key: 'name',
         label: 'Name',
-        render: (val, row) => (
-            <Link href={`/applicant/${row.id}`} passHref>
-                <span className="text-blue-600 hover:underline">{val}</span>
-            </Link>
-        ),
+        render: (_val, row) => <ApplicantCell applicantRef={row} field="name" />,
     },
-    { key: 'email', label: 'Email' },
-    { key: 'stage', label: 'Stage' },
-    { key: 'position', label: 'Position' },
+    {
+        key: 'email',
+        label: 'Email',
+        render: (_val, row) => <ApplicantCell applicantRef={row} field="email" />,
+    },
+    {
+        key: 'stage',
+        label: 'Stage',
+        render: (_val, row) => <ApplicantCell applicantRef={row} field="stage" />,
+    },
+    {
+        key: 'position',
+        label: 'Position',
+        render: (_val, row) => <ApplicantCell applicantRef={row} field="position" />,
+    },
     {
         key: 'appliedAt',
         label: 'Applied At',
-        render: (val) => new Date(val).toLocaleDateString(),
+        render: (_val, row) => <ApplicantCell applicantRef={row} field="appliedAt" />,
     },
     {
         key: 'id',
         label: 'Actions',
-        render: (_val, row) => (
-            <div className="flex gap-2">
-                <ApplicantStageAction id={row.id} currentStage={row.stage} />
-            </div>
-        ),
-    }
+        render: (_val, row) => <ApplicantActionsCell applicantRef={row} />,
+    },
 ];
