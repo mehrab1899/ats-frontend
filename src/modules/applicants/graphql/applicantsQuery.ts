@@ -6,11 +6,7 @@ export const ApplicantsQuery = graphql`
     applicants(search: $search, stage: $stage, skip: $skip, take: $take) {
       applicants {
         id
-        name
-        email
-        stage
-        position
-        appliedAt
+        ...ApplicantRow_applicant
       }
       totalApplicantsCount
     }
