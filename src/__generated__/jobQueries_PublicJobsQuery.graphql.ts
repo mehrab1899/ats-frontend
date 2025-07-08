@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a04e65bb82cacd966c7ee35b207a6484>>
+ * @generated SignedSource<<d0097615f276d42e9a08b8ede84cc119>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ export type JobStatus = "CLOSED" | "DRAFT" | "OPEN" | "%future added value";
 export type jobQueries_PublicJobsQuery$variables = Record<PropertyKey, never>;
 export type jobQueries_PublicJobsQuery$data = {
   readonly publicJobs: ReadonlyArray<{
-    readonly __typename: "PublicJob";
+    readonly __typename: "Job";
     readonly benefits: any;
     readonly context: string | null | undefined;
     readonly createdAt: string;
@@ -34,7 +34,7 @@ var v0 = [
   {
     "alias": null,
     "args": null,
-    "concreteType": "PublicJob",
+    "concreteType": "Job",
     "kind": "LinkedField",
     "name": "publicJobs",
     "plural": true,

@@ -4,7 +4,7 @@ type AuthPayload {
 
 type Query {
   _: Boolean
-  publicJobs: [PublicJob!]!
+  publicJobs: [Job!]!
   jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): JobsResponse!
   getJobById(id: ID!): Job!
   applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
@@ -16,9 +16,9 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, firstName: String, lastName: String): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
-  createJob(input: JobInput!): AdminJob!
-  updateJob(id: ID!, input: JobInput!): AdminJob!
-  updateJobStatus(id: ID!, status: JobStatus!): AdminJob!
+  createJob(input: JobInput!): Job!
+  updateJob(id: ID!, input: JobInput!): Job!
+  updateJobStatus(id: ID!, status: JobStatus!): Job!
   submitApplicationText(input: ApplicantTextInput!, cv: Upload!, coverLetter: Upload!): Applicant!
   updateApplicantStage(id: ID!, stage: Stage!): ApplicantRow!
 }
@@ -40,43 +40,21 @@ enum JobType {
   CONTRACT
 }
 
-type PublicJob {
-  id: ID!
-  title: String!
-  description: String!
-  status: JobStatus!
-  skillsRequired: JSON!
-  benefits: JSON!
-  createdAt: String!
-  context: String
-}
-
-type AdminJob {
-  id: ID!
-  title: String!
-  description: String!
-  status: JobStatus!
-  type: JobType!
-  applicants: Int!
-  createdAt: String!
-  context: String
-}
-
 type Job {
   id: ID!
   title: String!
   description: String!
   status: JobStatus!
   type: JobType!
+  applicants: Int!
   skillsRequired: JSON!
   benefits: JSON!
   createdAt: String!
-  applicants: Int!
   context: String
 }
 
 type JobsResponse {
-  jobs: [AdminJob!]!
+  jobs: [Job!]!
   totalJobsCount: Int!
 }
 

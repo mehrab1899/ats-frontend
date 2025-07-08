@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<df1e0420d59544577019bcfee892ddd5>>
+ * @generated SignedSource<<4fcfc5530c9986f9e758058337a0ff61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -56,7 +56,7 @@ v1 = [
         "variableName": "input"
       }
     ],
-    "concreteType": "AdminJob",
+    "concreteType": "Job",
     "kind": "LinkedField",
     "name": "createJob",
     "plural": false,
