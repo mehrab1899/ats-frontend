@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd770d3d2cbf44cab780150de129fffc>>
+ * @generated SignedSource<<96e3a7584de414cd8c5e5127ab77ad80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,7 +53,7 @@ v1 = [
         "variableName": "status"
       }
     ],
-    "concreteType": "AdminJob",
+    "concreteType": "Job",
     "kind": "LinkedField",
     "name": "updateJobStatus",
     "plural": false,

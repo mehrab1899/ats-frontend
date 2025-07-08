@@ -22,18 +22,12 @@ export const AdminJobsQuery = graphql`
       jobs {
         __typename
         id
-        title
-        description
-        status
-        type
-        applicants
-        createdAt
+        ...AdminJobRow_job
       }
       totalJobsCount
     }
   }
 `;
-
 export const GetJobByIdQuery = graphql`
   query jobQueries_GetJobByIdQuery($id: ID!) {
     getJobById(id: $id) {

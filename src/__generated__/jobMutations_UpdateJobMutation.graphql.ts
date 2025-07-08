@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5a0cd0cd5a1d031e968cf33b3c14033>>
+ * @generated SignedSource<<aff32d23322abd1d9c6322882cd928b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,9 +26,11 @@ export type jobMutations_UpdateJobMutation$variables = {
 export type jobMutations_UpdateJobMutation$data = {
   readonly updateJob: {
     readonly applicants: number;
+    readonly benefits: any;
     readonly createdAt: string;
     readonly description: string;
     readonly id: string;
+    readonly skillsRequired: any;
     readonly status: JobStatus;
     readonly title: string;
     readonly type: JobType;
@@ -67,7 +69,7 @@ v1 = [
         "variableName": "input"
       }
     ],
-    "concreteType": "AdminJob",
+    "concreteType": "Job",
     "kind": "LinkedField",
     "name": "updateJob",
     "plural": false,
@@ -111,6 +113,20 @@ v1 = [
         "alias": null,
         "args": null,
         "kind": "ScalarField",
+        "name": "skillsRequired",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "benefits",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
         "name": "applicants",
         "storageKey": null
       },
@@ -143,16 +159,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "cb59a37764c3456ddca9ac560f3dda49",
+    "cacheID": "1429b227d6613e7983d7921416791f3a",
     "id": null,
     "metadata": {},
     "name": "jobMutations_UpdateJobMutation",
     "operationKind": "mutation",
-    "text": "mutation jobMutations_UpdateJobMutation(\n  $id: ID!\n  $input: JobInput!\n) {\n  updateJob(id: $id, input: $input) {\n    id\n    title\n    description\n    status\n    type\n    applicants\n    createdAt\n  }\n}\n"
+    "text": "mutation jobMutations_UpdateJobMutation(\n  $id: ID!\n  $input: JobInput!\n) {\n  updateJob(id: $id, input: $input) {\n    id\n    title\n    description\n    status\n    type\n    skillsRequired\n    benefits\n    applicants\n    createdAt\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6b83fb3180756864f2e55449dc2ef4ab";
+(node as any).hash = "93e621021c69defdcf3d50bf6c81fd1e";
 
 export default node;

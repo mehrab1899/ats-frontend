@@ -8,6 +8,8 @@ export const UpdateJobMutation = graphql`
       description
       status
       type
+      skillsRequired
+      benefits
       applicants
       createdAt
     }

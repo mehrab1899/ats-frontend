@@ -1,42 +1,42 @@
-import JobStatusAction from '@/components/admin/job/JobStatusAction';
+// src/utils/jobColumns.ts
+import { JobCell, JobActionsCell } from '@/components/admin/job/JobCell';
 import { Column } from '@/components/DataTable';
-import Link from 'next/link';
-import { FaEdit, FaArchive } from 'react-icons/fa';
-import type { jobQueries_AdminJobsQuery$data } from '@/__generated__/jobQueries_AdminJobsQuery.graphql';
+import { AdminJobRow_job$key } from '@/__generated__/AdminJobRow_job.graphql';
 
-export type Job = jobQueries_AdminJobsQuery$data['jobs']['jobs'][number];
-
-export const jobColumns: Column<Job>[] = [
+export const jobColumns: Column<AdminJobRow_job$key>[] = [
     {
-        key: 'title', label: 'Title', render: (val, row) => (
-            <Link href={`/job/${row.id}?mode=view`} passHref>
-                <span className="text-blue-600 hover:underline">{val}</span>
-            </Link>
-        ),
+        key: 'title',
+        label: 'Title',
+        render: (_val, row) => <JobCell jobRef={row} field="title" />
     },
-    { key: 'description', label: 'Description' },
-    { key: 'status', label: 'Status' },
-    { key: 'type', label: 'Job Type' },
-    { key: 'applicants', label: 'Applicants' },
+    {
+        key: 'description',
+        label: 'Description',
+        render: (_val, row) => <JobCell jobRef={row} field="description" />
+    },
+    {
+        key: 'status',
+        label: 'Status',
+        render: (_val, row) => <JobCell jobRef={row} field="status" />
+    },
+    {
+        key: 'type',
+        label: 'Job Type',
+        render: (_val, row) => <JobCell jobRef={row} field="type" />
+    },
+    {
+        key: 'applicants',
+        label: 'Applicants',
+        render: (_val, row) => <JobCell jobRef={row} field="applicants" />
+    },
     {
         key: 'createdAt',
         label: 'Posted On',
-        render: (val) => new Date(val).toLocaleDateString(),
+        render: (_val, row) => <JobCell jobRef={row} field="createdAt" />
     },
     {
         key: 'id',
         label: 'Actions',
-        render: (_val, row) => (
-            <div className="flex gap-2">
-                <Link href={`/job/${row.id}?mode=edit`} passHref>
-                    <button
-                        className="flex items-center gap-1 px-4 py-2 rounded-full text-[var(--primary-color)] border border-[var(--primary-color)] hover:bg-[#E6EDF4] transition duration-150"
-                    >
-                        <FaEdit className="text-sm" />
-                    </button>
-                </Link>
-                <JobStatusAction id={row.id} currentStatus={row.status} />
-            </div>
-        ),
+        render: (_val, row) => <JobActionsCell jobRef={row} />
     }
 ];
