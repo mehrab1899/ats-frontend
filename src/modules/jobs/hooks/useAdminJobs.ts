@@ -10,7 +10,7 @@ export const useAdminJobs = (search?: string, status?: string, skip: number = 0,
         skip,
         take,
     }, {
-        fetchPolicy: 'store-or-network',
+        fetchPolicy: 'network-only',
     });
 
     return {

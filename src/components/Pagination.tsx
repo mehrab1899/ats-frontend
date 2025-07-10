@@ -33,8 +33,6 @@ const getPaginationRange = (current: number, total: number): (number | '...')[] 
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
     const pages = getPaginationRange(currentPage, totalPages);
 
-    console.log('totalPages', totalPages)
-
     return (
         <div className="flex items-center justify-center gap-2 py-4 text-sm font-medium">
             {/* Prev Button */}

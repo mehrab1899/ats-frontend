@@ -24,14 +24,14 @@ const JobCreateForm = () => {
         type: string;
         skillsRequired: string[];
         benefits: string[];
-      }>({
+    }>({
         title: '',
         description: '',
         status: 'OPEN',
         type: 'Full-time',
         skillsRequired: [],
         benefits: [],
-      });      
+    });
 
     const [errors, setErrors] = useState<{ [K in keyof typeof form]?: string }>({});
 
@@ -89,7 +89,7 @@ const JobCreateForm = () => {
             onCompleted: (res: any) => {
                 if (res?.createJob?.id) {
                     addToast('Job created successfully.', 'success');
-                    router.push(`/job/${res.createJob.id}?mode=view`);
+                    router.push(`/dashboard`);
                 } else {
                     addToast('Job creation failed. Try again later.', 'error');
                 }
