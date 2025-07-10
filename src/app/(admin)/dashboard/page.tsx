@@ -9,6 +9,11 @@ import DataTable from '@/components/DataTable';
 import { Applicant, applicantColumns } from '@/utils/applicantColumns';
 import { useApplicants } from '@/modules/applicants/hooks/useApplicants';
 import { useAdminJobs } from '@/modules/jobs/hooks/useAdminJobs';
+import { useLazyLoadQuery } from 'react-relay';
+// import { ApplicantListPaginationQuery } from '@/modules/applicants/graphql/applicantsQuery';
+import applicantsQuery_ApplicantListPaginationQuery from '@/__generated__/applicantsQuery_ApplicantListPaginationQuery.graphql';
+import { PaginatedApplicantList_data$key } from '@/__generated__/PaginatedApplicantList_data.graphql';
+import { usePaginatedApplicants } from '@/modules/applicants/hooks/usePaginatedApplicants';
 
 const StatCardsGrid = dynamic(() => import('@/components/admin/dashboard/StatCardsGrid'), {
     loading: () => <div className="text-center py-4">Loading cards...</div>,
@@ -38,8 +43,11 @@ export default function DashboardPage() {
     const [jobFilter, setJobFilter] = useState<'ALL' | 'OPEN' | 'DRAFT' | 'CLOSED'>('ALL');
     const [applicantFilter, setApplicantFilter] = useState<'APPLIED' | 'SHORTLISTED' | 'INTERVIEWED' | 'HIRED' | 'REJECTED'>('APPLIED');
 
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [pageSize] = useState<number>(10);
+    // const [currentPage, setCurrentPage] = useState<number>(1);
+
+    // const [pageSize] = useState<number>(10);
+    const pageSize = 10;
+
 
     const memoizedSearchTerm = useMemo(() => searchTerm, [searchTerm]);
 
@@ -53,16 +61,40 @@ export default function DashboardPage() {
     }, [selectedTab, applicantFilter]);
 
     // 🔹 Fetch data
-    const { applicants } = useApplicants(memoizedSearchTerm, stageFilter, (currentPage - 1) * pageSize, pageSize);
+    // const { applicants } = useApplicants(memoizedSearchTerm, stageFilter, (currentPage - 1) * pageSize, pageSize);
+
+    const applicantsQueryData = useLazyLoadQuery<PaginatedApplicantList_data$key>(
+        applicantsQuery_ApplicantListPaginationQuery,
+        {
+            search: memoizedSearchTerm,
+            stage: stageFilter,
+            first: pageSize,
+        },
+        { fetchPolicy: 'store-or-network' }
+    );
+
+    const {
+        applicants,
+        currentPage: relayPage,
+        totalPages,
+        goToPage,
+        goToNextPage,
+        isLoading,
+    } = usePaginatedApplicants({
+        fragmentRef: applicantsQueryData,
+        pageSize,
+    });
+
+    const currentPage = relayPage;
     const { adminJobs } = useAdminJobs(memoizedSearchTerm, statusFilter, (currentPage - 1) * pageSize, pageSize);
 
-    const totalPagesApplicants = Math.ceil(applicants.totalApplicantsCount / pageSize);
+    const totalPagesApplicants = totalPages;
     const totalPagesJobs = Math.ceil(adminJobs?.totalJobsCount / pageSize);
 
     // 🔹 Reset page on relevant change
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [selectedTab, searchTerm, jobFilter, applicantFilter]);
+    // useEffect(() => {
+    //     setCurrentPage(1);
+    // }, [selectedTab, searchTerm, jobFilter, applicantFilter]);
 
     // 🔹 Active filters + setter based on tab
     const activeFilters = selectedTab === 'Jobs' ? JOB_FILTERS : APPLICANT_FILTERS;
@@ -136,15 +168,16 @@ export default function DashboardPage() {
                 {/* Row 3: Table */}
                 <div className="pt-2">
                     {selectedTab === 'Jobs' ? (
-                        <DataTable<Job>
-                            columns={jobColumns}
-                            data={[...adminJobs.jobs]} // force to mutable array
-                            className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[var(--primary-color)]"
-                        />
+                        // <DataTable<Job>
+                        //     columns={jobColumns}
+                        //     data={[...adminJobs.jobs]} // force to mutable array
+                        //     className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[var(--primary-color)]"
+                        // />
+                        null
                     ) : (
-                        <DataTable<Applicant>
+                        <DataTable<ApplicantRow_applicant$key>
                             columns={applicantColumns}
-                            data={[...applicants.applicants]} // force to mutable array
+                            data={[...applicants]}
                             className="bg-white border-none [&>table>tbody>tr:nth-child(even)]:bg-gray-50 [&>table>tbody>tr:hover]:bg-[#f0f4f8] [&>table>tbody>tr:hover]:text-[var(--primary-color)]"
                         />
                     )}
@@ -152,10 +185,15 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Pagination Row */}
-                <Pagination
+                {/* <Pagination
                     currentPage={currentPage}
                     totalPages={selectedTab === 'Jobs' ? totalPagesJobs : totalPagesApplicants}
                     onPageChange={(page) => setCurrentPage(page)}
+                /> */}
+                <Pagination
+                    currentPage={relayPage}
+                    totalPages={totalPages}
+                    onPageChange={goToPage}
                 />
             </div>
         </div>

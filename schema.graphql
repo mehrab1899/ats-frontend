@@ -7,7 +7,7 @@ type Query {
   publicJobs: [Job!]!
   jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): JobsResponse!
   getJobById(id: ID!): Job!
-  applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
+  applicants(search: String, stage: Stage, first: Int, after: String, last: Int, before: String): ApplicantConnection!
   getApplicantById(id: ID!): Applicant!
   dashboardStats: DashboardStats!
   monthlyTrends: [MonthlyStats!]!
@@ -90,6 +90,24 @@ type ApplicantRow {
 type ApplicantsResponse {
   applicants: [ApplicantRow!]!
   totalApplicantsCount: Int!
+}
+
+type ApplicantEdge {
+  node: ApplicantRow!
+  cursor: String!
+}
+
+type ApplicantConnection {
+  edges: [ApplicantEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
 }
 
 type JobRef {
