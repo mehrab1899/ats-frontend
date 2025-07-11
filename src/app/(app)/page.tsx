@@ -2,8 +2,13 @@
 
 import React from 'react';
 import JobCard from '../../components/JobCard';
-import { usePublicJobs } from '@/modules/jobs/hooks/usePublicJobs';
+// import { usePublicJobs } from '@/modules/jobs/hooks/usePublicJobs';
 import { Carousel } from '@/components/Carousel';
+import { PublicJobsPaginationQuery } from '@/modules/jobs/graphql/jobQueries'
+import { useLazyLoadQuery } from 'react-relay';
+import { jobQueries_PublicJobsPaginationQuery } from '@/__generated__/jobQueries_PublicJobsPaginationQuery.graphql';
+import { usePaginatedPublicJobs } from '@/modules/jobs/hooks/usePaginatedPublicJobs';
+import Button from '@/components/Button';
 
 const cultureData = [
     {
@@ -27,7 +32,19 @@ const cultureData = [
 ];
 
 export default function Home() {
-    const { publicJobs } = usePublicJobs();
+
+    const queryData = useLazyLoadQuery<jobQueries_PublicJobsPaginationQuery>(
+        PublicJobsPaginationQuery,
+        { first: 6 },
+        { fetchPolicy: 'store-or-network' }
+    );
+
+    const {
+        data,
+        loadNext,
+        hasNext,
+        isLoadingNext
+    } = usePaginatedPublicJobs(queryData);
 
     return (
         <div className="bg-gray-100 text-center min-h-screen px-4 py-10 space-y-24">
@@ -45,22 +62,34 @@ export default function Home() {
             </section>
 
             {/* Job Positions Section */}
+        
             <section id="positions" className="max-w-6xl mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold text-blue-800 mb-12">Open Positions</h2>
 
-                {publicJobs?.length === 0 ? (
-                    <p className="text-center text-gray-500">No open positions available right now.</p>
+                {!data?.publicJobs?.edges?.length ? (
+                    <p className="text-center text-gray-500">
+                        No open positions available right now.
+                    </p>
                 ) : (
-                    <Carousel>
-                        {publicJobs.map((job) => (
-                            <JobCard
-                                id={job.id}
-                                key={job.id}
-                                title={job.title}
-                                description={job.description}
-                            />
-                        ))}
-                    </Carousel>
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[600px] overflow-y-auto px-4">
+                            {data?.publicJobs.edges.map((edge) =>
+                                edge?.node ? (
+                                    <JobCard key={edge.node.id} jobRef={edge.node} />
+                                ) : null
+                            )}
+                        </div>
+
+                        {hasNext && (
+                            <div className="mt-6 flex justify-center">
+                                <Button
+                                    onClick={() => loadNext(6)}
+                                    className={`bg-slate-800 hover:bg-slate-700 disabled:opacity-50`}
+                                    label={isLoadingNext ? 'Loading...' : 'Load More'}
+                                />
+                            </div>
+                        )}
+                    </>
                 )}
             </section>
 
