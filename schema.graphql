@@ -4,7 +4,7 @@ type AuthPayload {
 
 type Query {
   _: Boolean
-  publicJobs: [Job!]!
+  publicJobs(first: Int, after: String): JobConnection!
   jobs(search: String, status: JobStatus, skip: Int = 0, take: Int = 10): JobsResponse!
   getJobById(id: ID!): Job!
   applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
@@ -56,6 +56,23 @@ type Job {
 type JobsResponse {
   jobs: [Job!]!
   totalJobsCount: Int!
+}
+
+type JobEdge {
+  cursor: String!
+  node: Job!
+}
+
+type JobConnection {
+  edges: [JobEdge!]!
+  pageInfo: PageInfo!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
 }
 
 input JobInput {

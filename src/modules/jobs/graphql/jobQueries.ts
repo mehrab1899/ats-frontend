@@ -1,18 +1,8 @@
 import { graphql } from 'react-relay';
 
-export const PublicJobsQuery = graphql`
-  query jobQueries_PublicJobsQuery {
-    publicJobs {
-      __typename
-      id
-      title
-      description
-      status
-      skillsRequired
-      benefits
-      createdAt
-      context
-    }
+export const PublicJobsPaginationQuery = graphql`
+  query jobQueries_PublicJobsPaginationQuery($first: Int!, $after: String) {
+    ...usePaginatedPublicJobsPaginationFragment @arguments(first: $first, after: $after)
   }
 `;
 
