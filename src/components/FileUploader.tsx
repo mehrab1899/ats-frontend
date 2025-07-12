@@ -6,21 +6,54 @@ import { FaFileAlt, FaTimes, FaCheckCircle } from 'react-icons/fa';
 type FileUploaderProps = {
   label: string;
   onChange: (file: File | null) => void;
+  onError?: (msg: string | null) => void;
 };
 
-const FileUploader: React.FC<FileUploaderProps> = ({ label, onChange }) => {
+const MAX_FILE_SIZE_MB = 5;
+const ACCEPTED_FILE_TYPES = [
+  'application/pdf',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+];
+
+const FileUploader: React.FC<FileUploaderProps> = ({ label, onChange, onError }) => {
   const [file, setFile] = useState<File | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
+
+    if (selectedFile) {
+      if (!ACCEPTED_FILE_TYPES.includes(selectedFile.type)) {
+        const msg = 'Only PDF and DOCX files are allowed.';
+        setErrorMsg(msg);
+        onError?.(msg);
+        setFile(selectedFile);
+        onChange(null);
+        return;
+      }
+
+      if (selectedFile.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+        const msg = 'File must be under 5 MB.';
+        setErrorMsg(msg);
+        onError?.(msg);
+        setFile(selectedFile);
+        onChange(null);
+        return;
+      }
+    }
+
+    setErrorMsg(null);
     setFile(selectedFile);
+    onError?.(null);
     onChange(selectedFile);
   };
 
   const handleRemoveFile = () => {
     setFile(null);
+    setErrorMsg(null);
     onChange(null);
+    onError?.(null);
     if (inputRef.current) inputRef.current.value = '';
   };
 
@@ -32,7 +65,6 @@ const FileUploader: React.FC<FileUploaderProps> = ({ label, onChange }) => {
         onClick={() => inputRef.current?.click()}
         className="relative flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-400 bg-gray-100 rounded-xl cursor-pointer hover:bg-gray-200 transition-colors text-center"
       >
-        {/* ❌ Remove Icon */}
         {file && (
           <button
             onClick={(e) => {
@@ -46,14 +78,17 @@ const FileUploader: React.FC<FileUploaderProps> = ({ label, onChange }) => {
           </button>
         )}
 
-        {/* 📄 File Info or Placeholder */}
         {file ? (
           <>
             <FaFileAlt className="text-gray-600 text-3xl mb-1" />
             <p className="text-gray-700 font-medium max-w-[90%] truncate px-2">
               {file.name}
             </p>
-            <FaCheckCircle className="text-green-500 text-xl mt-2" />
+            {errorMsg ? (
+              <FaTimes className="text-red-500 text-xl mt-2" />
+            ) : (
+              <FaCheckCircle className="text-green-500 text-xl mt-2" />
+            )}
           </>
         ) : (
           <>
@@ -62,7 +97,6 @@ const FileUploader: React.FC<FileUploaderProps> = ({ label, onChange }) => {
           </>
         )}
 
-        {/* Hidden File Input */}
         <input
           ref={inputRef}
           type="file"
@@ -70,8 +104,10 @@ const FileUploader: React.FC<FileUploaderProps> = ({ label, onChange }) => {
           className="hidden"
         />
       </div>
+
+      {errorMsg && <p className="text-red-600 text-sm">{errorMsg}</p>}
     </div>
-);
+  );
 };
 
 export default FileUploader;
