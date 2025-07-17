@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<66a1902566d28c631db1e41d5efc6670>>
+ * @generated SignedSource<<9c040818b405f0ef510fcf71022df8c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -74,10 +74,10 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "ApplicantRow",
+  "type": "Applicant",
   "abstractKey": null
 };
 
-(node as any).hash = "45b17012c0839f24c74d7785dad682cc";
+(node as any).hash = "a1309809216dc0cdd2f843be0d1290df";
 
 export default node;

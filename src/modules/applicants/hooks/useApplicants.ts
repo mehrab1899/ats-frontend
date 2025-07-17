@@ -13,7 +13,7 @@ export const useApplicants = (search?: string, stage?: string, skip: number = 0,
     }), [search, stage, skip, take]);  // Update only when the relevant params change
 
     const data = useLazyLoadQuery<applicantsQuery_ApplicantsQuery>(ApplicantsQuery, queryVariables, {
-        fetchPolicy: 'store-or-network',
+        fetchPolicy: 'network-only',
     });
 
     return {

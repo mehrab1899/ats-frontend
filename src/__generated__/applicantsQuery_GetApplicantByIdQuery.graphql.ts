@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab73de0e23e8bdb4fac62f4e607c03bc>>
+ * @generated SignedSource<<b1b64eac1d62be1c7036e4d8ebf563dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -105,7 +105,7 @@ v2 = [
       {
         "alias": null,
         "args": null,
-        "concreteType": "JobRef",
+        "concreteType": "Job",
         "kind": "LinkedField",
         "name": "job",
         "plural": false,

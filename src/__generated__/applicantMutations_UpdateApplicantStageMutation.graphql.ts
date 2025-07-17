@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6af4efae7cd45ef4d672014fb47256b6>>
+ * @generated SignedSource<<7707321db2173333f72686d18efa6f2b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,7 +53,7 @@ v1 = [
         "variableName": "stage"
       }
     ],
-    "concreteType": "ApplicantRow",
+    "concreteType": "Applicant",
     "kind": "LinkedField",
     "name": "updateApplicantStage",
     "plural": false,

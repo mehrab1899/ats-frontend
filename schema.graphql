@@ -20,7 +20,7 @@ type Mutation {
   updateJob(id: ID!, input: JobInput!): Job!
   updateJobStatus(id: ID!, status: JobStatus!): Job!
   submitApplicationText(input: ApplicantTextInput!, cv: Upload!, coverLetter: Upload!): Applicant!
-  updateApplicantStage(id: ID!, stage: Stage!): ApplicantRow!
+  updateApplicantStage(id: ID!, stage: Stage!): Applicant!
 }
 
 """
@@ -95,33 +95,21 @@ enum Stage {
   REJECTED
 }
 
-type ApplicantRow {
-  id: ID!
-  name: String!
-  email: String!
-  stage: Stage!
-  position: String!
-  appliedAt: String!
-}
-
 type ApplicantsResponse {
-  applicants: [ApplicantRow!]!
+  applicants: [Applicant!]!
   totalApplicantsCount: Int!
-}
-
-type JobRef {
-  id: ID!
-  title: String!
 }
 
 type Applicant {
   id: ID!
   firstName: String!
   lastName: String!
+  name: String!
   email: String!
   phone: String!
   jobId: ID!
-  job: JobRef!
+  job: Job!
+  position: String!
   stage: Stage!
   cv: String!
   coverLetter: String!

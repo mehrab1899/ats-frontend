@@ -51,11 +51,10 @@ const MultiSelectInput: React.FC<MultiSelectInputProps> = ({
     return (
         <div ref={wrapperRef} className="relative w-full">
             <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
-
             {/* Selected Tags */}
             <div
                 onClick={() => setIsOpen(!isOpen)}
-                className={`min-h-[42px] border px-2 py-1 flex flex-wrap gap-2 rounded-md cursor-pointer ${disabled ? 'bg-gray-100 cursor-not-allowed' : 'hover:border-blue-500'
+                className={`min-h-[42px] border border-gray-300 px-2 py-1 flex flex-wrap gap-2 rounded-md cursor-pointer ${disabled ? 'bg-gray-100 cursor-not-allowed' : 'hover:border-blue-500'
                     }`}
             >
                 {values.length === 0 && (
@@ -92,7 +91,7 @@ const MultiSelectInput: React.FC<MultiSelectInputProps> = ({
                     {options.map((option) => (
                         <div
                             key={option.value}
-                            className={`px-4 py-2 cursor-pointer hover:bg-blue-100 flex items-center justify-between ${values.includes(option.value) ? 'bg-blue-50 font-medium' : ''
+                            className={`px-4 py-2 cursor-pointer text-black hover:bg-blue-100 flex items-center justify-between ${values.includes(option.value) ? 'bg-blue-50 font-medium' : ''
                                 }`}
                             onClick={() => toggleSelect(option.value)}
                         >
