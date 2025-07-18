@@ -10,6 +10,13 @@ interface ApplicationFormProps {
   jobId: string;
 }
 
+const fieldLabels: Record<string, string> = {
+  firstName: 'First Name',
+  lastName: 'Last Name',
+  phone: 'Phone',
+  email: 'Email',
+};
+
 const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
   const [form, setForm] = useState({
     firstName: '',
@@ -90,7 +97,8 @@ const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
     <form className="space-y-6 mt-6 w-full max-w-2xl" onSubmit={handleSubmit}>
       {['firstName', 'lastName', 'phone', 'email'].map((field) => (
         <div key={field}>
-          <label className="block text-sm font-medium capitalize">{field}</label>
+          <label className="block text-sm text-black font-medium capitalize">  {fieldLabels[field] || field}
+          </label>
           <input
             type={field === 'email' ? 'email' : field === 'phone' ? 'tel' : 'text'}
             name={field}
@@ -105,13 +113,13 @@ const ApplicationForm = ({ jobId }: ApplicationFormProps) => {
       ))}
 
       <div>
-        <label className="block text-sm font-medium">Message</label>
+        <label className="block text-sm text-black font-medium">Message</label>
         <textarea
           name="message"
           value={form.message}
           onChange={handleChange}
           rows={4}
-          className="mt-1 p-2 w-full border border-gray-300 rounded"
+          className="mt-1 p-2 w-full border text-black border-gray-300 rounded"
         />
       </div>
 

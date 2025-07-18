@@ -106,10 +106,10 @@ const JobCreateForm = () => {
 
             <form className="space-y-8" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <TextInput label="Title" type="text" value={form.title} onChange={handleChange('title')} />
+                    <TextInput placeholder="Enter a title" label="Title" type="text" value={form.title} onChange={handleChange('title')} />
                     {errors.title && <p className="text-red-600 text-sm">{errors.title}</p>}
 
-                    <TextInput label="Description" type="text" value={form.description} onChange={handleChange('description')} />
+                    <TextInput placeholder="Enter a description" label="Description" type="text" value={form.description} onChange={handleChange('description')} />
                     {errors.description && <p className="text-red-600 text-sm">{errors.description}</p>}
 
                     <SelectInput

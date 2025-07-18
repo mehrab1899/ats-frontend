@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cac9acfce73ec877689a83874024d269>>
+ * @generated SignedSource<<06178701ef2c3339413d6da350e05968>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -111,7 +111,7 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "ApplicantRow",
+            "concreteType": "Applicant",
             "kind": "LinkedField",
             "name": "applicants",
             "plural": true,
@@ -155,7 +155,7 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "ApplicantRow",
+            "concreteType": "Applicant",
             "kind": "LinkedField",
             "name": "applicants",
             "plural": true,
@@ -206,12 +206,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4fcbb5924377168fec74c8a61179069e",
+    "cacheID": "2686552d22a6c430072cb46928931666",
     "id": null,
     "metadata": {},
     "name": "applicantsQuery_ApplicantsQuery",
     "operationKind": "query",
-    "text": "query applicantsQuery_ApplicantsQuery(\n  $search: String\n  $stage: Stage\n  $skip: Int\n  $take: Int\n) {\n  applicants(search: $search, stage: $stage, skip: $skip, take: $take) {\n    applicants {\n      id\n      ...ApplicantRow_applicant\n    }\n    totalApplicantsCount\n  }\n}\n\nfragment ApplicantRow_applicant on ApplicantRow {\n  id\n  name\n  email\n  stage\n  position\n  appliedAt\n}\n"
+    "text": "query applicantsQuery_ApplicantsQuery(\n  $search: String\n  $stage: Stage\n  $skip: Int\n  $take: Int\n) {\n  applicants(search: $search, stage: $stage, skip: $skip, take: $take) {\n    applicants {\n      id\n      ...ApplicantRow_applicant\n    }\n    totalApplicantsCount\n  }\n}\n\nfragment ApplicantRow_applicant on Applicant {\n  id\n  name\n  email\n  stage\n  position\n  appliedAt\n}\n"
   }
 };
 })();

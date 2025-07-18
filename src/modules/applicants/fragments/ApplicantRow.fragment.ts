@@ -2,7 +2,7 @@
 import { graphql } from 'react-relay';
 
 export const ApplicantRowFragment = graphql`
-  fragment ApplicantRow_applicant on ApplicantRow {
+  fragment ApplicantRow_applicant on Applicant {
     id
     name
     email
