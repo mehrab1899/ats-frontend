@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1b64eac1d62be1c7036e4d8ebf563dc>>
+ * @generated SignedSource<<1e8d406fc70a517a9efa95fcfcf7ad02>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type applicantsQuery_GetApplicantByIdQuery$data = {
     readonly firstName: string;
     readonly id: string;
     readonly job: {
+      readonly description: string;
       readonly id: string;
       readonly title: string;
     };
@@ -117,6 +118,13 @@ v2 = [
             "kind": "ScalarField",
             "name": "title",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "description",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -171,16 +179,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "a2089bdd3258303096a18381d13795ac",
+    "cacheID": "693d43b757f86adc123e35926662f23e",
     "id": null,
     "metadata": {},
     "name": "applicantsQuery_GetApplicantByIdQuery",
     "operationKind": "query",
-    "text": "query applicantsQuery_GetApplicantByIdQuery(\n  $id: ID!\n) {\n  getApplicantById(id: $id) {\n    id\n    firstName\n    lastName\n    email\n    phone\n    stage\n    job {\n      id\n      title\n    }\n    cv\n    coverLetter\n    message\n    appliedAt\n  }\n}\n"
+    "text": "query applicantsQuery_GetApplicantByIdQuery(\n  $id: ID!\n) {\n  getApplicantById(id: $id) {\n    id\n    firstName\n    lastName\n    email\n    phone\n    stage\n    job {\n      id\n      title\n      description\n    }\n    cv\n    coverLetter\n    message\n    appliedAt\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4105f76db3430074a1e8507684bcc588";
+(node as any).hash = "4dfca95bf6043ec2770d35056e87b0ff";
 
 export default node;

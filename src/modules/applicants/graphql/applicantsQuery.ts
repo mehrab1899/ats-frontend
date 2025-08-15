@@ -25,11 +25,23 @@ export const GetApplicantByIdQuery = graphql`
       job {
         id
         title
+        description
       }
       cv
       coverLetter
       message
       appliedAt
+    }
+  }
+`;
+
+export const ScoreResumeQuery = graphql`
+  query applicantsQuery_ScoreResumeQuery($resumeUrl: String!, $jobDescription: String!) {
+    scoreResume(resumeUrl: $resumeUrl, jobDescription: $jobDescription) {
+      category
+      confidence
+      relevance_score
+      explanation
     }
   }
 `;

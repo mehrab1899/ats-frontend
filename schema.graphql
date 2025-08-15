@@ -9,6 +9,7 @@ type Query {
   getJobById(id: ID!): Job!
   applicants(search: String, stage: Stage, skip: Int, take: Int): ApplicantsResponse!
   getApplicantById(id: ID!): Applicant!
+  scoreResume(resumeUrl: String!, jobDescription: String!): ResumeScore
   dashboardStats: DashboardStats!
   monthlyTrends: [MonthlyStats!]!
 }
@@ -98,6 +99,13 @@ enum Stage {
 type ApplicantsResponse {
   applicants: [Applicant!]!
   totalApplicantsCount: Int!
+}
+
+type ResumeScore {
+  category: String
+  confidence: Float
+  relevance_score: Float
+  explanation: String
 }
 
 type Applicant {
