@@ -29,7 +29,7 @@ const ApplicantDetail = () => {
   const { id } = useParams();
   const applicant = useApplicantById(id as string);
   const { category, confidence, relevance_score, explanation } = useScoreResume(applicant.cv || '', applicant.job.description || '');
-
+  console.log('in resume component')
   const matched = explanation.match(/Matched Skills:\n([\s\S]*?)\n\n/)?.[1]?.trim().split("\n") || [];
   const partial = explanation.match(/Partial Matches:\n([\s\S]*?)\n\n/)?.[1]?.trim().split("\n") || [];
   const missing = explanation.match(/Missing Skills:\n([\s\S]*)/)?.[1]?.trim().split("\n") || [];
